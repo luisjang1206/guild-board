@@ -34,13 +34,12 @@ class ChecklistsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to project_task_path(@project, @task)
   end
 
-  test "create with valid params and turbo_stream returns turbo_stream response" do
+  test "create redirects even for turbo_stream requests (broadcast handles DOM update)" do
     sign_in_as @user
     post project_task_checklists_url(@project, @task),
       params: { checklist: { content: "Turbo item" } },
       as: :turbo_stream
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_redirected_to project_task_path(@project, @task)
   end
 
   test "create with invalid params returns 422" do
@@ -93,13 +92,12 @@ class ChecklistsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to project_task_path(@project, @task)
   end
 
-  test "update with turbo_stream returns turbo_stream response" do
+  test "update redirects even for turbo_stream requests (broadcast handles DOM update)" do
     sign_in_as @user
     patch project_task_checklist_url(@project, @task, @checklist),
       params: { checklist: { completed: true } },
       as: :turbo_stream
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_redirected_to project_task_path(@project, @task)
   end
 
   test "update returns 403 for non-owner" do
@@ -130,12 +128,11 @@ class ChecklistsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to project_task_path(@project, @task)
   end
 
-  test "destroy with turbo_stream returns turbo_stream response" do
+  test "destroy redirects even for turbo_stream requests (broadcast handles DOM update)" do
     sign_in_as @user
     delete project_task_checklist_url(@project, @task, @checklist),
       as: :turbo_stream
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_redirected_to project_task_path(@project, @task)
   end
 
   test "destroy returns 403 for non-owner" do

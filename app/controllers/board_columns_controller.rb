@@ -6,10 +6,7 @@ class BoardColumnsController < ApplicationController
     authorize @project, :update?
     @column = @project.board_columns.build(column_params)
     if @column.save
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.before("add-column-btn", partial: "board_columns/column", locals: { column: @column, project: @project, tasks: [] }) }
-        format.html { redirect_to project_board_path(@project) }
-      end
+      redirect_to project_board_path(@project)
     else
       redirect_to project_board_path(@project), alert: @column.errors.full_messages.join(", ")
     end
@@ -33,16 +30,21 @@ class BoardColumnsController < ApplicationController
       end
     else
       @column.destroy
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.remove("board_column_#{@column.id}") }
-        format.html { redirect_to project_board_path(@project) }
-      end
+      redirect_to project_board_path(@project)
     end
   end
 
   def move
     authorize @project, :update?
     @column.move_to_position(params[:position].to_i)
+    @project.board_columns.order(:position).each do |col|
+      Turbo::StreamsChannel.broadcast_replace_later_to(
+        [ @project, :board ],
+        target: "board_column_#{col.id}",
+        partial: "board_columns/column",
+        locals: { column: col, project: @project, tasks: col.active_tasks }
+      )
+    end
     head :ok
   end
 

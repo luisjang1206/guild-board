@@ -48,13 +48,12 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     assert_equal @user.id.to_s, created.creator_id
   end
 
-  test "create with valid params and turbo_stream returns turbo_stream response" do
+  test "create redirects even for turbo_stream requests (broadcast handles DOM update)" do
     sign_in_as @user
     post project_tasks_url(@project),
       params: { task: { title: "Turbo Task", board_column_id: @board_column.id } },
       as: :turbo_stream
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_redirected_to project_board_path(@project)
   end
 
   test "create with invalid params renders new with 422" do

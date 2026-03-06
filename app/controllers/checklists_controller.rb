@@ -8,10 +8,7 @@ class ChecklistsController < ApplicationController
     authorize @project, :update?
     @checklist = @task.checklists.build(checklist_params)
     if @checklist.save
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to project_task_path(@project, @task) }
-      end
+      redirect_to project_task_path(@project, @task)
     else
       head :unprocessable_entity
     end
@@ -21,20 +18,14 @@ class ChecklistsController < ApplicationController
     authorize @project, :update?
     @checklist = @task.checklists.find(params[:id])
     @checklist.update!(checklist_params)
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to project_task_path(@project, @task) }
-    end
+    redirect_to project_task_path(@project, @task)
   end
 
   def destroy
     authorize @project, :update?
     @checklist = @task.checklists.find(params[:id])
     @checklist.destroy
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to project_task_path(@project, @task) }
-    end
+    redirect_to project_task_path(@project, @task)
   end
 
   private

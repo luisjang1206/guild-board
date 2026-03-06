@@ -29,13 +29,12 @@ class BoardColumnsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "New Column", BoardColumn.last.name
   end
 
-  test "create with valid params and turbo_stream returns turbo_stream response" do
+  test "create redirects even for turbo_stream requests (broadcast handles DOM update)" do
     sign_in_as @user
     post project_board_columns_url(@project),
       params: { board_column: { name: "Turbo Column" } },
       as: :turbo_stream
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_redirected_to project_board_path(@project)
   end
 
   test "create with invalid params redirects with alert for empty name" do
@@ -107,11 +106,10 @@ class BoardColumnsControllerTest < ActionDispatch::IntegrationTest
     assert_equal I18n.t("board_columns.cannot_delete_with_tasks"), flash[:alert]
   end
 
-  test "destroy of empty column with turbo_stream returns turbo_stream response" do
+  test "destroy of empty column redirects even for turbo_stream requests (broadcast handles DOM update)" do
     sign_in_as @user
     delete project_board_column_url(@project, @column_empty), as: :turbo_stream
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_redirected_to project_board_path(@project)
   end
 
   test "destroy returns 403 for non-owner" do

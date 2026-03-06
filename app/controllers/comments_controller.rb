@@ -10,10 +10,7 @@ class CommentsController < ApplicationController
     @comment.author_type = "user"
     @comment.author_id = Current.user.id.to_s
     if @comment.save
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to project_task_path(@project, @task) }
-      end
+      redirect_to project_task_path(@project, @task)
     else
       head :unprocessable_entity
     end

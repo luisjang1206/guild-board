@@ -47,13 +47,12 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to project_task_path(@project, @task)
   end
 
-  test "create with valid params and turbo_stream returns turbo_stream response" do
+  test "create redirects even for turbo_stream requests (broadcast handles DOM update)" do
     sign_in_as @user
     post project_task_comments_url(@project, @task),
       params: { comment: { content: "Turbo comment" } },
       as: :turbo_stream
-    assert_response :success
-    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_redirected_to project_task_path(@project, @task)
   end
 
   test "create with invalid params returns 422" do

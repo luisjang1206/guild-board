@@ -17,10 +17,7 @@ class TasksController < ApplicationController
     authorize @task
 
     if @task.save
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to project_board_path(@project) }
-      end
+      redirect_to project_board_path(@project)
     else
       @board_columns = @project.board_columns.order(:position)
       render :new, status: :unprocessable_entity
@@ -54,6 +51,19 @@ class TasksController < ApplicationController
     @task = @project.tasks.find(params[:id])
     authorize @task, :update?
     @task.move_to_column(params[:board_column_id], params[:position])
+    @task.reload
+
+    Turbo::StreamsChannel.broadcast_remove_to(
+      [ @project, :board ],
+      target: ActionView::RecordIdentifier.dom_id(@task)
+    )
+    Turbo::StreamsChannel.broadcast_append_to(
+      [ @project, :board ],
+      target: "board_column_#{@task.board_column_id}_tasks",
+      partial: "tasks/task_card",
+      locals: { task: @task }
+    )
+
     head :ok
   rescue ActiveRecord::RecordInvalid => e
     head :unprocessable_entity
@@ -61,13 +71,8 @@ class TasksController < ApplicationController
 
   def destroy
     authorize @task
-    @board_column = @task.board_column
     @task.soft_delete
-
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to project_board_path(@project), notice: t("tasks.destroyed") }
-    end
+    redirect_to project_board_path(@project), notice: t("tasks.destroyed")
   end
 
   private
