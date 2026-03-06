@@ -1,9 +1,0 @@
-<%= turbo_stream.append "checklist-items" do %>
-  <%= render "checklists/checklist_item", checklist: @checklist, task: @task, project: @project %>
-<% end %>
-<%= turbo_stream.replace "checklist-progress" do %>
-  <%= render "checklists/progress", task: @task %>
-<% end %>
-<%= turbo_stream.replace "checklist-add-form" do %>
-  <%= render "checklists/add_form", task: @task, project: @project %>
-<% end %>

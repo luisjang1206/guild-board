@@ -1,4 +1,0 @@
-<%= turbo_stream.remove "checklist_#{@checklist.id}" %>
-<%= turbo_stream.replace "checklist-progress" do %>
-  <%= render "checklists/progress", task: @task %>
-<% end %>

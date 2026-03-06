@@ -1,5 +1,7 @@
 class Task < ApplicationRecord
   include Positionable
+  include ActionView::RecordIdentifier
+
   positionable scope: :board_column_id
 
   belongs_to :project
@@ -18,12 +20,23 @@ class Task < ApplicationRecord
   validates :creator_type, presence: true, inclusion: { in: %w[user agent] }
   validates :creator_id, presence: true
 
+  after_create_commit -> {
+    broadcast_append_later_to(
+      [ project, :board ],
+      target: "board_column_#{board_column_id}_tasks",
+      partial: "tasks/task_card",
+      locals: { task: self }
+    )
+  }
+
+  after_update_commit :handle_update_broadcast
+
   def soft_delete
-    update_column(:deleted_at, Time.current)
+    update!(deleted_at: Time.current)
   end
 
   def restore
-    update_column(:deleted_at, nil)
+    update!(deleted_at: nil)
   end
 
   def soft_deleted?
@@ -52,6 +65,21 @@ class Task < ApplicationRecord
       else
         move_to_position(new_position)
       end
+    end
+  end
+
+  private
+
+  def handle_update_broadcast
+    if saved_change_to_deleted_at? && deleted_at.present?
+      broadcast_remove_to [ project, :board ], target: dom_id(self)
+    else
+      broadcast_replace_later_to(
+        [ project, :board ],
+        target: dom_id(self),
+        partial: "tasks/task_card",
+        locals: { task: self }
+      )
     end
   end
 end
