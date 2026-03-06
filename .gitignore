@@ -47,3 +47,9 @@
 
 CLAUDE.md
 .mcp.json
+
+# Claude Code local settings
+.claude/
+
+# Shrimp task manager data
+shrimp_data/
