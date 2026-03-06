@@ -5,6 +5,9 @@ en:
     no_columns: No columns yet
     no_columns_hint: Add a column to get started
     add_column: Add Column
+    connection:
+      connected: Connected
+      disconnected: Disconnected
   board_column:
     name: Column Name
     name_placeholder: "e.g. To Do, In Progress..."

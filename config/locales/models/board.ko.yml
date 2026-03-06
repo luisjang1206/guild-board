@@ -5,6 +5,9 @@ ko:
     no_columns: 칼럼이 없습니다
     no_columns_hint: 칼럼을 추가하여 시작하세요
     add_column: 칼럼 추가
+    connection:
+      connected: 연결됨
+      disconnected: 연결 끊김
   board_column:
     name: 칼럼 이름
     name_placeholder: "예: 할 일, 진행 중..."

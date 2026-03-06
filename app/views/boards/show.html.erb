@@ -1,4 +1,5 @@
 <% content_for :main_class, "mt-16" %>
+<div data-controller="board">
 <%# Board header %>
 <div class="border-b-2 border-black bg-white px-6 py-4">
   <div class="mx-auto max-w-full">
@@ -19,12 +20,26 @@
           <%= t("board.title") %>
         </span>
       </div>
+
+      <%# Connection status indicator — hidden by default, shown only when disconnected %>
+      <div class="ml-auto">
+        <div data-board-target="connectionStatus"
+             data-connected-text="<%= t("board.connection.connected") %>"
+             data-disconnected-text="<%= t("board.connection.disconnected") %>"
+             class="flex items-center gap-1.5 border-2 border-black px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000] transition-opacity duration-300 opacity-0">
+          <span data-dot class="h-2 w-2 rounded-full bg-green-500 border border-black"></span>
+          <span data-text><%= t("board.connection.connected") %></span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <%# Filter bar %>
 <%= render FilterBarComponent.new(project: @project, labels: @labels, filters: @filters) %>
+
+<%# Real-time broadcast subscription %>
+<%= turbo_stream_from @project, :board %>
 
 <%# Kanban board area — wrapped in turbo-frame for filter compatibility %>
 <%= turbo_frame_tag "board" do %>
@@ -93,3 +108,4 @@
 <% end %>
 
 <%= turbo_frame_tag "modal" %>
+</div>

@@ -12,7 +12,8 @@ Rails.application.configure do
     policy.object_src  :none
     policy.script_src  :self, :unsafe_inline, "https://cdn.jsdelivr.net"
     policy.style_src   :self, :unsafe_inline
-    policy.connect_src :self
+    policy.connect_src :self, "ws://localhost:*", "wss://localhost:*"
+    # Production: policy.connect_src :self, "wss://#{your_domain}"
   end
 
   # Report violations without blocking (switch to false for enforcement)
