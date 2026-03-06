@@ -1,11 +1,11 @@
-<div class="py-12 text-center">
+<div class="<%= wrapper_classes %>">
   <% if icon? %>
-    <div class="mx-auto mb-4 text-gray-400">
+    <div class="<%= icon_classes %>">
       <%= icon %>
     </div>
   <% end %>
 
-  <p class="text-sm text-gray-500"><%= @message %></p>
+  <p class="<%= message_classes %>"><%= @message %></p>
 
   <% if action? %>
     <div class="mt-6">

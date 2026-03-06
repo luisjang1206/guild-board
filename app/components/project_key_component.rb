@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class ProjectKeyComponent < ApplicationComponent
-  def initialize(project_key:, project:, raw_key: nil)
+  def initialize(project_key:, project:, raw_key: nil, style: :neo)
     @project_key = project_key
     @project = project
     @raw_key = raw_key
+    @style = style
   end
 
   private

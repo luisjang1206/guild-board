@@ -25,4 +25,13 @@ class ModalComponentTest < ViewComponent::TestCase
     end
     assert_selector("[data-action='click->modal#closeOnBackdrop']")
   end
+
+  test "renders neo modal with hard shadow panel" do
+    render_inline(ModalComponent.new(style: :neo)) do |modal|
+      modal.with_body { "Content" }
+    end
+    assert_selector("[data-modal-target='dialog'][class*='bg-black']")
+    assert_selector("div.border-2.border-black")
+    assert_no_selector("div.rounded-lg")
+  end
 end

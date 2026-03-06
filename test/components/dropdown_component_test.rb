@@ -20,4 +20,13 @@ class DropdownComponentTest < ViewComponent::TestCase
     end
     assert_selector("[role='menu']")
   end
+
+  test "renders neo dropdown menu with hard shadow" do
+    render_inline(DropdownComponent.new(style: :neo)) do |dropdown|
+      dropdown.with_trigger { "Menu" }
+      dropdown.with_item { "Item 1" }
+    end
+    assert_selector("[data-dropdown-target='menu'].border-2.border-black")
+    assert_no_selector("[data-dropdown-target='menu'].rounded-md")
+  end
 end

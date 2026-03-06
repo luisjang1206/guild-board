@@ -1,18 +1,18 @@
 <div class="<%= css_classes %>">
   <% if title? %>
-    <div class="mb-4 text-lg font-semibold text-gray-900">
+    <div class="<%= title_classes %>">
       <%= title %>
     </div>
   <% end %>
 
   <% if body? %>
-    <div class="text-gray-700">
+    <div class="<%= body_classes %>">
       <%= body %>
     </div>
   <% end %>
 
   <% if footer? %>
-    <div class="mt-4 border-t border-gray-100 pt-4">
+    <div class="<%= footer_classes %>">
       <%= footer %>
     </div>
   <% end %>

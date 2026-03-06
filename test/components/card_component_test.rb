@@ -30,4 +30,29 @@ class CardComponentTest < ViewComponent::TestCase
     end
     assert_selector("div.border-t", text: "Footer")
   end
+
+  test "renders neo default card" do
+    render_inline(CardComponent.new(style: :neo)) do |card|
+      card.with_title { "Title" }
+      card.with_body { "Body" }
+    end
+    assert_selector("div.border-2.border-black")
+    assert_selector("div[class*='shadow-']")
+    assert_no_selector("div.rounded-lg")
+  end
+
+  test "renders neo card with uppercase bold title" do
+    render_inline(CardComponent.new(style: :neo)) do |card|
+      card.with_title { "Title" }
+    end
+    assert_selector("div.font-bold.uppercase", text: "Title")
+  end
+
+  test "renders neo card with thick footer border" do
+    render_inline(CardComponent.new(style: :neo)) do |card|
+      card.with_body { "Body" }
+      card.with_footer { "Footer" }
+    end
+    assert_selector("div.border-t-2.border-black", text: "Footer")
+  end
 end

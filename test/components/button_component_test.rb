@@ -28,4 +28,22 @@ class ButtonComponentTest < ViewComponent::TestCase
     render_inline(ButtonComponent.new(disabled: true)) { "Disabled" }
     assert_selector("button[disabled]")
   end
+
+  test "renders neo primary button" do
+    render_inline(ButtonComponent.new(style: :neo)) { "Click" }
+    assert_selector("button.border-2.border-black.bg-yellow-300")
+    assert_no_selector("button.bg-indigo-600")
+  end
+
+  test "renders neo secondary button" do
+    render_inline(ButtonComponent.new(variant: :secondary, style: :neo)) { "Cancel" }
+    assert_selector("button.border-2.border-black.bg-white")
+    assert_no_selector("button.ring-1")
+  end
+
+  test "renders neo danger button" do
+    render_inline(ButtonComponent.new(variant: :danger, style: :neo)) { "Delete" }
+    assert_selector("button.border-2.border-black.bg-red-100")
+    assert_no_selector("button.bg-red-600")
+  end
 end

@@ -20,4 +20,10 @@ class EmptyStateComponentTest < ViewComponent::TestCase
     end
     assert_text("Add new")
   end
+
+  test "renders neo empty state with dashed border" do
+    render_inline(EmptyStateComponent.new(message: "No items", style: :neo))
+    assert_selector("div.border-2.border-black.border-dashed")
+    assert_selector("p.font-bold.uppercase", text: "No items")
+  end
 end

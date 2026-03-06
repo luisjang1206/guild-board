@@ -29,4 +29,22 @@ class FlashComponentTest < ViewComponent::TestCase
     render_inline(FlashComponent.new(flash: { notice: "Test" }))
     assert_selector("button[data-action='click->flash#dismiss']")
   end
+
+  test "renders neo notice flash" do
+    render_inline(FlashComponent.new(flash: { notice: "Success!" }, style: :neo))
+    assert_selector("[data-controller='flash']")
+    assert_text("Success!")
+    assert_selector(".border-2.border-black.bg-green-200")
+    assert_no_selector(".border-green-400")
+  end
+
+  test "renders neo alert flash" do
+    render_inline(FlashComponent.new(flash: { alert: "Warning!" }, style: :neo))
+    assert_selector(".border-2.border-black.bg-yellow-200")
+  end
+
+  test "renders neo error flash" do
+    render_inline(FlashComponent.new(flash: { error: "Error!" }, style: :neo))
+    assert_selector(".border-2.border-black.bg-red-200")
+  end
 end

@@ -1,6 +1,6 @@
 <div>
   <% if @label %>
-    <%= @form.label @field_name, @label, class: FormFieldComponent::LABEL_CLASSES %>
+    <%= @form.label @field_name, @label, class: label_classes %>
   <% end %>
 
   <div class="mt-1">
@@ -20,7 +20,7 @@
 
   <% if has_errors? %>
     <% Array(@error_messages).each do |message| %>
-      <p class="<%= FormFieldComponent::ERROR_CLASSES %>"><%= message %></p>
+      <p class="<%= error_classes %>"><%= message %></p>
     <% end %>
   <% end %>
 </div>

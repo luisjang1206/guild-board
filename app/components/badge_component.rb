@@ -8,14 +8,22 @@ class BadgeComponent < ApplicationComponent
     info: "inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20"
   }.freeze
 
-  def initialize(variant: :info, label:)
+  NEO_VARIANTS = {
+    success: "inline-flex items-center border-2 border-black bg-green-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
+    warning: "inline-flex items-center border-2 border-black bg-yellow-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
+    error: "inline-flex items-center border-2 border-black bg-red-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
+    info: "inline-flex items-center border-2 border-black bg-blue-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]"
+  }.freeze
+
+  def initialize(variant: :info, label:, style: :modern)
     @variant = variant
     @label = label
+    @style = style
   end
 
   private
 
   def css_classes
-    VARIANTS[@variant]
+    resolve_variants(@variant, VARIANTS, NEO_VARIANTS)
   end
 end

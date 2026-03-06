@@ -1,26 +1,26 @@
 <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
   <div class="mb-8">
     <div class="flex items-center justify-between">
-      <h1 class="text-2xl font-bold text-gray-900"><%= @project.name %></h1>
+      <h1 class="text-2xl font-bold uppercase text-black"><%= @project.name %></h1>
       <div class="flex gap-2">
-        <%= render ButtonComponent.new(tag: :a, href: edit_project_path(@project), variant: :secondary) do %>
+        <%= render ButtonComponent.new(tag: :a, href: edit_project_path(@project), variant: :secondary, style: :neo) do %>
           <%= t(".settings") %>
         <% end %>
       </div>
     </div>
     <% if @project.description.present? %>
-      <p class="mt-2 text-gray-600"><%= @project.description %></p>
+      <p class="mt-2 text-black"><%= @project.description %></p>
     <% end %>
   </div>
 
   <%# Board columns overview %>
   <div class="mb-8">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4"><%= t(".board") %></h2>
+    <h2 class="text-lg font-bold uppercase text-black mb-4"><%= t(".board") %></h2>
     <div class="flex gap-4 overflow-x-auto pb-2">
       <% @board_columns.each do |column| %>
-        <div class="min-w-[200px] rounded-lg bg-gray-50 p-4">
-          <h3 class="text-sm font-medium text-gray-700"><%= column.name %></h3>
-          <p class="mt-1 text-xs text-gray-400"><%= column.tasks.active.count %> tasks</p>
+        <div class="min-w-[200px] border-2 border-black bg-white p-4 shadow-[3px_3px_0px_#000000]">
+          <h3 class="text-sm font-bold uppercase text-black"><%= column.name %></h3>
+          <p class="mt-1 text-xs font-bold text-black"><%= column.tasks.active.count %> tasks</p>
         </div>
       <% end %>
     </div>
@@ -29,16 +29,16 @@
   <%# API Keys section %>
   <div class="mb-8" id="project-keys">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold text-gray-900"><%= t(".api_keys") %></h2>
+      <h2 class="text-lg font-bold uppercase text-black"><%= t(".api_keys") %></h2>
     </div>
 
     <%# New key creation form %>
     <%= form_with url: project_project_keys_path(@project), method: :post, class: "mb-4 flex items-end gap-3" do |form| %>
       <div class="flex-1">
-        <%= form.label :name, t("project_keys.component.key_name_label"), class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= form.text_field :name, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm", placeholder: "e.g., CI/CD Key", required: true %>
+        <%= form.label :name, t("project_keys.component.key_name_label"), class: "block text-sm font-bold uppercase text-black mb-1" %>
+        <%= form.text_field :name, class: "block w-full border-2 border-black py-1.5 text-black shadow-[3px_3px_0px_#000000] placeholder:text-gray-500 focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000] focus:outline-none sm:text-sm", placeholder: "e.g., CI/CD Key", required: true %>
       </div>
-      <%= render ButtonComponent.new(type: "submit") do %>
+      <%= render ButtonComponent.new(type: "submit", style: :neo) do %>
         <%= t("project_keys.component.create_key") %>
       <% end %>
     <% end %>
@@ -54,7 +54,7 @@
         <% end %>
       </div>
     <% else %>
-      <p class="text-sm text-gray-500"><%= t(".no_keys") %></p>
+      <p class="text-sm font-bold text-black"><%= t(".no_keys") %></p>
     <% end %>
   </div>
 </div>

@@ -25,8 +25,8 @@
 
   <body>
 <%= render(NavbarComponent.new(user: Current.user)) %>
-<%= render(FlashComponent.new(flash: flash)) if flash.any? %>
-    <main class="container mx-auto mt-28 px-5 flex">
+<%= render(FlashComponent.new(flash: flash, style: :neo)) if flash.any? %>
+    <main class="<%= content_for?(:main_class) ? yield(:main_class) : 'container mx-auto mt-28 px-5 flex' %>">
       <%= yield %>
     </main>
   </body>

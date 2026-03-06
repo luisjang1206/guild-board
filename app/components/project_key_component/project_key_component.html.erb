@@ -1,21 +1,21 @@
-<div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white p-4">
+<div class="flex items-center justify-between border-2 border-black bg-white p-4 shadow-[4px_4px_0px_#000000]">
   <div class="flex-1">
     <div class="flex items-center gap-2">
-      <span class="text-sm font-medium text-gray-900"><%= @project_key.name %></span>
-      <%= render BadgeComponent.new(variant: badge_variant, label: badge_label) %>
+      <span class="text-sm font-bold text-black"><%= @project_key.name %></span>
+      <%= render BadgeComponent.new(variant: badge_variant, label: badge_label, style: @style) %>
     </div>
-    <div class="mt-1 text-xs text-gray-500">
+    <div class="mt-1 text-xs font-bold text-black">
       <span class="font-mono"><%= @project_key.key_prefix %>&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;</span>
       <span class="ml-2"><%= t("activerecord.attributes.project_key.last_used_at") %>: <%= last_used_text %></span>
     </div>
 
     <% if @raw_key.present? %>
-      <div class="mt-2 rounded-md bg-yellow-50 p-3 border border-yellow-200" data-controller="clipboard">
-        <p class="text-xs font-medium text-yellow-800 mb-1"><%= t("project_keys.component.new_key_warning") %></p>
+      <div class="mt-2 border-2 border-black bg-yellow-200 p-3 shadow-[3px_3px_0px_#000000]" data-controller="clipboard">
+        <p class="text-xs font-bold uppercase text-black mb-1"><%= t("project_keys.component.new_key_warning") %></p>
         <div class="flex items-center gap-2">
-          <code class="flex-1 rounded bg-white px-2 py-1 text-xs font-mono text-gray-900 border" data-clipboard-target="source"><%= @raw_key %></code>
+          <code class="flex-1 border-2 border-black bg-white px-2 py-1 text-xs font-mono text-black" data-clipboard-target="source"><%= @raw_key %></code>
           <button type="button"
-                  class="inline-flex items-center rounded-md bg-yellow-600 px-2.5 py-1.5 text-xs font-semibold text-white hover:bg-yellow-500"
+                  class="inline-flex items-center border-2 border-black bg-yellow-300 px-2.5 py-1.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]"
                   data-action="clipboard#copy"
                   data-clipboard-target="button">
             <%= t("project_keys.component.copy") %>
@@ -27,19 +27,19 @@
 
   <div class="ml-4 flex items-center gap-2">
     <%= form_with url: toggle_active_project_project_key_path(@project, @project_key), method: :patch, class: "inline" do %>
-      <%= render ButtonComponent.new(variant: :secondary, type: "submit") do %>
+      <%= render ButtonComponent.new(variant: :secondary, type: "submit", style: @style) do %>
         <%= t("project_keys.component.toggle") %>
       <% end %>
     <% end %>
 
     <%= form_with url: regenerate_project_project_key_path(@project, @project_key), method: :post, class: "inline" do %>
-      <%= render ButtonComponent.new(variant: :secondary, type: "submit") do %>
+      <%= render ButtonComponent.new(variant: :secondary, type: "submit", style: @style) do %>
         <%= t("project_keys.component.regenerate") %>
       <% end %>
     <% end %>
 
     <%= form_with url: project_project_key_path(@project, @project_key), method: :delete, class: "inline" do %>
-      <%= render ButtonComponent.new(variant: :danger, type: "submit") do %>
+      <%= render ButtonComponent.new(variant: :danger, type: "submit", style: @style) do %>
         <%= t("project_keys.component.delete") %>
       <% end %>
     <% end %>
