@@ -1,0 +1,13 @@
+user_comment:
+  task: active_task
+  author_type: "user"
+  author_id: "1"
+  content: "This looks good, let's proceed."
+  created_at: <%= Time.current %>
+
+agent_comment:
+  task: active_task
+  author_type: "agent"
+  author_id: "api_key_1"
+  content: "Automated analysis complete."
+  created_at: <%= Time.current %>

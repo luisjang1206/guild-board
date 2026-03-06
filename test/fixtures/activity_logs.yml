@@ -1,0 +1,8 @@
+task_created_log:
+  project: user_one_project
+  task: active_task
+  actor_type: "user"
+  actor_id: "1"
+  action: "task_created"
+  metadata: { "title": ["", "Active Task"] }
+  created_at: <%= Time.current %>

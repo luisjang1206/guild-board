@@ -1,0 +1,11 @@
+task_checklist_1:
+  task: active_task
+  content: "Write unit tests"
+  completed: false
+  position: 0
+
+task_checklist_2:
+  task: active_task
+  content: "Update documentation"
+  completed: true
+  position: 1

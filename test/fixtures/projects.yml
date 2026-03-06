@@ -1,0 +1,9 @@
+user_one_project:
+  user: regular
+  name: "User One Project"
+  description: "A test project for user one"
+
+user_two_project:
+  user: admin
+  name: "User Two Project"
+  description: "A test project for user two"

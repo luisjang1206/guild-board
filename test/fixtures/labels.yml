@@ -1,0 +1,14 @@
+frontend:
+  project: user_one_project
+  name: "Frontend"
+  color: "#3B82F6"
+
+backend:
+  project: user_one_project
+  name: "Backend"
+  color: "#10B981"
+
+bugfix:
+  project: user_one_project
+  name: "Bugfix"
+  color: "#EF4444"

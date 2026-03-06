@@ -1,0 +1,20 @@
+active_task:
+  project: user_one_project
+  board_column: todo
+  title: "Active Task"
+  description: "An active test task"
+  priority: 0
+  position: 0
+  creator_type: "user"
+  creator_id: "1"
+
+deleted_task:
+  project: user_one_project
+  board_column: todo
+  title: "Deleted Task"
+  description: "A soft-deleted task"
+  priority: 1
+  position: 1
+  creator_type: "user"
+  creator_id: "1"
+  deleted_at: <%= Time.current %>

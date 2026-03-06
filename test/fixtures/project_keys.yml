@@ -1,0 +1,17 @@
+default_key:
+  project: user_one_project
+  key_digest: <%= BCrypt::Password.create('guild_test1234567890abcdef12') %>
+  key_prefix: "guild_test123"
+  name: "Default"
+  permissions: {}
+  active: true
+  created_at: <%= Time.current %>
+
+inactive_key:
+  project: user_one_project
+  key_digest: <%= BCrypt::Password.create('guild_inac1234567890abcdef12') %>
+  key_prefix: "guild_inac123"
+  name: "Inactive Key"
+  permissions: {}
+  active: false
+  created_at: <%= Time.current %>
