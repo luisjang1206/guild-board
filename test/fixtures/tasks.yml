@@ -18,3 +18,23 @@ deleted_task:
   creator_type: "user"
   creator_id: "1"
   deleted_at: <%= Time.current %>
+
+high_priority_task:
+  project: user_two_project
+  board_column: backlog
+  title: "High Priority Task"
+  description: "An urgent task"
+  priority: 2
+  position: 0
+  creator_type: "user"
+  creator_id: "1"
+
+agent_task:
+  project: user_two_project
+  board_column: backlog
+  title: "Agent Task"
+  description: "A task created by an agent"
+  priority: 0
+  position: 1
+  creator_type: "agent"
+  creator_id: "api_key_1"

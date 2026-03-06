@@ -1,0 +1,8 @@
+en:
+  comments:
+    form:
+      placeholder: "Write a comment..."
+      submit: Post Comment
+    author:
+      agent: Agent
+      user: User

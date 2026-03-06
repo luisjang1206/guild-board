@@ -10,7 +10,7 @@ Rails.application.configure do
     policy.font_src    :self, "https://fonts.gstatic.com"
     policy.img_src     :self, :data, :https
     policy.object_src  :none
-    policy.script_src  :self, :unsafe_inline
+    policy.script_src  :self, :unsafe_inline, "https://cdn.jsdelivr.net"
     policy.style_src   :self, :unsafe_inline
     policy.connect_src :self
   end

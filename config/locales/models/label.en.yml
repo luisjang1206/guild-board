@@ -1,0 +1,18 @@
+en:
+  labels:
+    index:
+      back_to_board: Back to Board
+      title: "Labels — %{name}"
+      all_labels: All Labels
+      no_labels: No labels yet
+      new_label: New Label
+    edit:
+      title: Edit Label
+    form:
+      name_label: Name
+      name_placeholder: "e.g. Bug, Feature, Docs..."
+      color_label: Color
+      color_hint: Pick a hex color
+      submit_create: Create Label
+      submit_update: Update Label
+    confirm_delete: Delete this label?

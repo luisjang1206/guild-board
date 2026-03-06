@@ -1,0 +1,4 @@
+<%= turbo_stream.append "board_column_#{@task.board_column_id}_tasks" do %>
+  <%= render TaskCardComponent.new(task: @task) %>
+<% end %>
+<%= turbo_stream.update "modal" %>

@@ -1,0 +1,7 @@
+ko:
+  checklists:
+    progress:
+      title: 체크리스트
+    form:
+      placeholder: "항목 추가..."
+      add: 추가

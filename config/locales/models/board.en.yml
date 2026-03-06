@@ -1,0 +1,33 @@
+en:
+  board:
+    title: Board
+    back_to_project: Back to Project
+    no_columns: No columns yet
+    no_columns_hint: Add a column to get started
+    add_column: Add Column
+  board_column:
+    name: Column Name
+    name_placeholder: "e.g. To Do, In Progress..."
+    add: Add Column
+    click_to_edit: Click to edit column name
+    edit_name: Edit column name
+    no_tasks: No tasks in this column
+    add_task: "Add task to %{name}"
+    confirm_delete: "Delete column \"%{name}\"? This cannot be undone."
+    delete: "Delete column %{name}"
+  board_columns:
+    cannot_delete_with_tasks: Cannot delete column with active tasks
+  filter_bar:
+    priority: Priority
+    all_priorities: All Priorities
+    priority_low: Low
+    priority_medium: Medium
+    priority_high: High
+    label: Label
+    all_labels: All Labels
+    creator: Creator
+    all_creators: All Creators
+    creator_user: User
+    creator_agent: Agent
+    filtered: Filtered
+    clear: Clear

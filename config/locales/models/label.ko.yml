@@ -1,0 +1,18 @@
+ko:
+  labels:
+    index:
+      back_to_board: 보드로 돌아가기
+      title: "라벨 — %{name}"
+      all_labels: 모든 라벨
+      no_labels: 아직 라벨이 없습니다
+      new_label: 새 라벨
+    edit:
+      title: 라벨 수정
+    form:
+      name_label: 이름
+      name_placeholder: "예: 버그, 기능, 문서..."
+      color_label: 색상
+      color_hint: 헥스 색상을 선택하세요
+      submit_create: 라벨 생성
+      submit_update: 라벨 수정
+    confirm_delete: 이 라벨을 삭제하시겠습니까?

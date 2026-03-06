@@ -1,0 +1,70 @@
+<div id="task_<%= @task.id %>"
+     data-task-id="<%= @task.id %>"
+     data-drag-item
+     class="border-2 border-black bg-white shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000] cursor-pointer">
+
+  <div class="p-3">
+    <%# Top row: priority badge + creator icon %>
+    <div class="mb-2 flex items-center justify-between">
+      <%= render BadgeComponent.new(variant: priority_variant, label: @task.priority.upcase, style: :neo) %>
+
+      <span class="text-gray-500" aria-label="Created by <%= creator_icon %>">
+        <% if creator_icon == "agent" %>
+          <%# Robot icon for agent %>
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 1-6.23-.693L4.2 13.913m15.6 1.387-.166.467a2.25 2.25 0 0 1-2.12 1.483H6.486a2.25 2.25 0 0 1-2.12-1.483l-.165-.467M12 10.5a2.25 2.25 0 1 1 0-4.5 2.25 2.25 0 0 1 0 4.5Zm0 0v1.5" />
+          </svg>
+        <% else %>
+          <%# Person icon for user %>
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+        <% end %>
+      </span>
+    </div>
+
+    <%# Task title %>
+    <%= link_to project_task_path(project, @task),
+          data: { turbo_frame: "modal" },
+          class: "mb-3 block text-sm font-bold text-black leading-snug hover:underline" do %>
+      <%= @task.title %>
+    <% end %>
+
+    <%# Bottom row: labels + checklist + comments %>
+    <div class="flex items-center gap-3">
+      <%# Label color dots %>
+      <% if label_colors.any? %>
+        <div class="flex items-center gap-1" aria-label="Labels">
+          <% label_colors.each do |label| %>
+            <span class="h-3 w-3 rounded-full border-2 border-black flex-shrink-0"
+                  style="background-color: <%= label[:color] %>;"
+                  title="<%= label[:name] %>"></span>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%# Spacer %>
+      <div class="flex-1"></div>
+
+      <%# Checklist progress %>
+      <% if (progress = checklist_progress) %>
+        <div class="flex items-center gap-1 text-xs font-bold text-gray-700" aria-label="Checklist: <%= progress[:completed] %> of <%= progress[:total] %> completed">
+          <svg class="h-3.5 w-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+          <span><%= progress[:completed] %>/<%= progress[:total] %></span>
+        </div>
+      <% end %>
+
+      <%# Comment count %>
+      <% if comment_count > 0 %>
+        <div class="flex items-center gap-1 text-xs font-bold text-gray-700" aria-label="<%= comment_count %> comments">
+          <svg class="h-3.5 w-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+          </svg>
+          <span><%= comment_count %></span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

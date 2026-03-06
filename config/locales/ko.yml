@@ -19,3 +19,33 @@ ko:
     invalid_token: "비밀번호 재설정 링크가 유효하지 않거나 만료되었습니다."
   rate_limit:
     exceeded: "요청이 너무 많습니다. 잠시 후 다시 시도해주세요."
+  common:
+    cancel: "취소"
+  filter_bar:
+    priority: "우선순위"
+    label: "라벨"
+    creator: "생성자"
+    all_priorities: "전체 우선순위"
+    all_labels: "전체 라벨"
+    all_creators: "전체 생성자"
+    priority_low: "낮음"
+    priority_medium: "보통"
+    priority_high: "높음"
+    creator_user: "사용자"
+    creator_agent: "에이전트"
+    filtered: "필터 적용됨"
+    clear: "초기화"
+  board:
+    no_columns: "컬럼이 없습니다"
+    no_columns_hint: "컬럼을 추가하여 태스크를 정리하세요"
+    add_column: "컬럼 추가"
+  board_column:
+    click_to_edit: "클릭하여 컬럼 이름 수정"
+    edit_name: "컬럼 이름 수정"
+    add_task: "%{name}에 태스크 추가"
+    confirm_delete: '"%{name}" 컬럼과 모든 태스크를 삭제할까요?'
+    delete: "%{name} 컬럼 삭제"
+    no_tasks: "태스크가 없습니다"
+    name: "컬럼 이름"
+    name_placeholder: "예: 진행 중"
+    add: "컬럼 추가"

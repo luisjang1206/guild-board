@@ -1,0 +1,72 @@
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="frame-modal">
+    <div data-frame-modal-target="dialog"
+         data-action="click->frame-modal#closeOnBackdrop"
+         class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4 py-8"
+         aria-modal="true"
+         role="dialog"
+         aria-labelledby="modal-title-label-edit">
+      <div class="relative w-full max-w-md border-2 border-black bg-white shadow-[8px_8px_0px_#000000]">
+
+        <%# Header %>
+        <div class="flex items-center justify-between border-b-2 border-black px-6 py-4">
+          <h2 id="modal-title-label-edit" class="text-lg font-bold uppercase tracking-wide text-black">
+            <%= t("labels.edit.title") %>
+          </h2>
+          <button type="button"
+                  data-action="click->frame-modal#close"
+                  class="border-2 border-black p-1 transition-all hover:bg-gray-100"
+                  aria-label="<%= t("defaults.buttons.close_modal") %>">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+
+        <%# Form %>
+        <div class="px-6 py-5">
+          <%= form_with model: [@project, @label], class: "space-y-4" do |form| %>
+            <% if @label.errors.any? %>
+              <div class="border-2 border-black bg-red-100 p-3 shadow-[3px_3px_0px_#000000]" role="alert">
+                <% @label.errors.full_messages.each do |msg| %>
+                  <p class="text-sm font-bold text-red-700"><%= msg %></p>
+                <% end %>
+              </div>
+            <% end %>
+
+            <div>
+              <label for="<%= form.field_id(:name) %>" class="mb-1 block text-sm font-bold uppercase text-black">
+                <%= t("labels.form.name_label") %> <span class="text-red-600" aria-hidden="true">*</span>
+              </label>
+              <%= form.text_field :name,
+                  required: true,
+                  class: "w-full border-2 border-black px-3 py-2 text-sm shadow-[3px_3px_0px_#000000] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000]" %>
+            </div>
+
+            <div>
+              <label for="<%= form.field_id(:color) %>" class="mb-1 block text-sm font-bold uppercase text-black">
+                <%= t("labels.form.color_label") %> <span class="text-red-600" aria-hidden="true">*</span>
+              </label>
+              <div class="flex items-center gap-3">
+                <%= form.color_field :color,
+                    class: "h-10 w-16 cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000000] outline-none p-0.5" %>
+                <span class="text-xs text-gray-500"><%= t("labels.form.color_hint") %></span>
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2">
+              <button type="button"
+                      data-action="click->frame-modal#close"
+                      class="border-2 border-black bg-white px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]">
+                <%= t("defaults.buttons.cancel") %>
+              </button>
+              <%= form.submit t("labels.form.submit_update"),
+                  class: "cursor-pointer border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]" %>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<% end %>

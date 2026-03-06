@@ -1,0 +1,79 @@
+<%= turbo_frame_tag "modal" %>
+
+<div class="min-h-screen bg-white p-6">
+  <%# Header %>
+  <div class="mb-6 flex items-center justify-between border-b-2 border-black pb-4">
+    <div>
+      <%= link_to project_board_path(@project),
+          class: "mb-2 inline-flex items-center gap-1 text-xs font-bold uppercase text-gray-500 hover:text-black" do %>
+        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+        </svg>
+        <%= t("labels.index.back_to_board") %>
+      <% end %>
+      <h1 class="text-2xl font-bold uppercase tracking-wide text-black">
+        <%= t("labels.index.title", name: @project.name) %>
+      </h1>
+    </div>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-2">
+    <%# Label list %>
+    <div>
+      <h2 class="mb-3 text-sm font-bold uppercase text-gray-500"><%= t("labels.index.all_labels") %></h2>
+      <div id="labels-list" class="space-y-2">
+        <% @labels.each do |label| %>
+          <%= render "labels/label", label: label, project: @project %>
+        <% end %>
+        <% if @labels.empty? %>
+          <div class="border-2 border-black bg-gray-50 p-6 text-center shadow-[3px_3px_0px_#000000]">
+            <p class="text-sm font-bold uppercase text-gray-400"><%= t("labels.index.no_labels") %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# New label form %>
+    <div>
+      <h2 class="mb-3 text-sm font-bold uppercase text-gray-500"><%= t("labels.index.new_label") %></h2>
+      <div class="border-2 border-black bg-white p-5 shadow-[4px_4px_0px_#000000]">
+        <%= form_with model: [@project, @label], class: "space-y-4" do |form| %>
+          <% if @label.errors.any? %>
+            <div class="border-2 border-black bg-red-100 p-3 shadow-[3px_3px_0px_#000000]" role="alert">
+              <% @label.errors.full_messages.each do |msg| %>
+                <p class="text-sm font-bold text-red-700"><%= msg %></p>
+              <% end %>
+            </div>
+          <% end %>
+
+          <div>
+            <label for="<%= form.field_id(:name) %>" class="mb-1 block text-sm font-bold uppercase text-black">
+              <%= t("labels.form.name_label") %> <span class="text-red-600" aria-hidden="true">*</span>
+            </label>
+            <%= form.text_field :name,
+                required: true,
+                placeholder: t("labels.form.name_placeholder"),
+                class: "w-full border-2 border-black px-3 py-2 text-sm shadow-[3px_3px_0px_#000000] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000]" %>
+          </div>
+
+          <div>
+            <label for="<%= form.field_id(:color) %>" class="mb-1 block text-sm font-bold uppercase text-black">
+              <%= t("labels.form.color_label") %> <span class="text-red-600" aria-hidden="true">*</span>
+            </label>
+            <div class="flex items-center gap-3">
+              <%= form.color_field :color,
+                  value: @label.color.presence || "#FFDD00",
+                  class: "h-10 w-16 cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000000] outline-none p-0.5" %>
+              <span class="text-xs text-gray-500"><%= t("labels.form.color_hint") %></span>
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-2">
+            <%= form.submit t("labels.form.submit_create"),
+                class: "cursor-pointer border-2 border-black bg-yellow-300 px-5 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

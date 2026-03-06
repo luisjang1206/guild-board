@@ -1,0 +1,158 @@
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="frame-modal">
+    <div data-frame-modal-target="dialog"
+         data-action="click->frame-modal#closeOnBackdrop"
+         class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4 py-8"
+         aria-modal="true"
+         role="dialog"
+         aria-labelledby="modal-title-show">
+      <div class="relative w-full max-w-xl border-2 border-black bg-white shadow-[8px_8px_0px_#000000]">
+
+        <%# Header %>
+        <div class="flex items-start justify-between border-b-2 border-black px-6 py-4">
+          <div class="flex-1 pr-8">
+            <p class="mb-1 text-xs font-bold uppercase text-gray-500">
+              <%= @task.board_column.name %>
+            </p>
+            <h2 id="modal-title-show" class="text-xl font-bold uppercase tracking-wide text-black">
+              <%= @task.title %>
+            </h2>
+          </div>
+          <button type="button"
+                  data-action="click->frame-modal#close"
+                  class="border-2 border-black p-1 transition-all hover:bg-gray-100"
+                  aria-label="<%= t("defaults.buttons.close_modal") %>">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+
+        <%# Body %>
+        <div class="space-y-5 px-6 py-5">
+
+          <%# Priority badge %>
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-bold uppercase text-gray-500"><%= t("tasks.show.priority") %></span>
+            <%
+              priority_styles = {
+                "high"   => "border-2 border-black bg-red-100 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
+                "medium" => "border-2 border-black bg-yellow-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
+                "low"    => "border-2 border-black bg-blue-100 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]"
+              }
+            %>
+            <span class="<%= priority_styles[@task.priority] || priority_styles['low'] %>">
+              <%= @task.priority.upcase %>
+            </span>
+          </div>
+
+          <%# Description %>
+          <% if @task.description.present? %>
+            <div>
+              <h3 class="mb-2 text-xs font-bold uppercase text-gray-500"><%= t("tasks.show.description") %></h3>
+              <div class="border-2 border-black bg-gray-50 p-3 shadow-[3px_3px_0px_#000000]">
+                <p class="whitespace-pre-wrap text-sm text-black"><%= @task.description %></p>
+              </div>
+            </div>
+          <% end %>
+
+          <%# Labels %>
+          <div>
+            <h3 class="mb-2 text-xs font-bold uppercase text-gray-500"><%= t("tasks.show.labels") %></h3>
+            <% project_labels = @project.labels.order(:name) %>
+            <% if project_labels.any? %>
+              <%= form_with url: project_task_path(@project, @task),
+                  method: :patch,
+                  data: { turbo_stream: true } do |form| %>
+                <div class="flex flex-wrap gap-2">
+                  <% project_labels.each do |label| %>
+                    <label class="flex cursor-pointer items-center gap-1.5 border-2 border-black px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000000] <%= @task.label_ids.include?(label.id) ? 'bg-yellow-200' : 'bg-white' %>">
+                      <%= check_box_tag "task[label_ids][]",
+                          label.id,
+                          @task.label_ids.include?(label.id),
+                          class: "sr-only",
+                          onchange: "this.closest('form').requestSubmit()" %>
+                      <span class="h-3 w-3 flex-shrink-0 border border-black"
+                            style="background-color: <%= label.color %>;" aria-hidden="true"></span>
+                      <%= label.name %>
+                    </label>
+                  <% end %>
+                  <%# Hidden field to allow deselecting all labels %>
+                  <%= hidden_field_tag "task[label_ids][]", "" %>
+                </div>
+              <% end %>
+            <% else %>
+              <p class="text-xs text-gray-400">
+                <%= t("tasks.show.no_labels") %> <%= link_to t("tasks.show.create_labels"), project_labels_path(@project), class: "font-bold underline hover:text-black" %>.
+              </p>
+            <% end %>
+          </div>
+
+          <%# Checklists %>
+          <div>
+            <div id="checklist-progress">
+              <%= render "checklists/progress", task: @task %>
+            </div>
+            <ul id="checklist-items" class="space-y-2">
+              <% @task.checklists.order(:position).each do |item| %>
+                <%= render "checklists/checklist_item", checklist: item, task: @task, project: @project %>
+              <% end %>
+            </ul>
+            <%= render "checklists/add_form", task: @task, project: @project %>
+          </div>
+
+          <%# Comments %>
+          <div>
+            <h3 class="mb-3 text-xs font-bold uppercase text-gray-500">
+              <%= t("tasks.show.comments") %> (<span id="comments-count"><%= @task.comments.size %></span>)
+            </h3>
+            <ul id="comments-list" class="mb-4 space-y-3">
+              <% @task.comments.order(created_at: :asc).each do |comment| %>
+                <%= render "comments/comment", comment: comment %>
+              <% end %>
+              <% if @task.comments.empty? %>
+                <li id="comments-empty" class="border-2 border-black bg-gray-50 p-4 text-center shadow-[2px_2px_0px_#000000]">
+                  <p class="text-xs font-bold uppercase text-gray-400"><%= t("tasks.show.no_comments") %></p>
+                </li>
+              <% end %>
+            </ul>
+            <%= render "comments/form", task: @task, project: @project %>
+          </div>
+
+          <%# Empty state if no body content at all %>
+          <% if !@task.description.present? && @project.labels.empty? && @task.checklists.empty? && @task.comments.empty? %>
+            <div class="border-2 border-black bg-gray-50 p-6 text-center shadow-[3px_3px_0px_#000000]">
+              <p class="text-sm font-bold uppercase text-gray-400"><%= t("tasks.show.no_details") %></p>
+            </div>
+          <% end %>
+
+        </div>
+
+        <%# Footer: actions %>
+        <div class="flex items-center justify-between border-t-2 border-black px-6 py-4">
+          <div>
+            <%= button_to project_task_path(@project, @task),
+                method: :delete,
+                data: { turbo_confirm: t("tasks.confirm_delete") },
+                class: "border-2 border-black bg-red-100 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000] cursor-pointer" do %>
+              <%= t("defaults.buttons.delete") %>
+            <% end %>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button type="button"
+                    data-action="click->frame-modal#close"
+                    class="border-2 border-black bg-white px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]">
+              <%= t("defaults.buttons.close") %>
+            </button>
+            <%= link_to t("tasks.edit.title"),
+                edit_project_task_path(@project, @task),
+                data: { turbo_frame: "modal" },
+                class: "border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]" %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<% end %>

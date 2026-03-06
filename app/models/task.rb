@@ -29,4 +29,29 @@ class Task < ApplicationRecord
   def soft_deleted?
     deleted_at.present?
   end
+
+  def move_to_column(new_column_id, new_position)
+    new_column_id = new_column_id.to_i
+    new_position = new_position.to_i
+
+    transaction do
+      if board_column_id != new_column_id
+        # Remove from old column: shift down items after current position
+        self.class.where(board_column_id: board_column_id, deleted_at: nil)
+          .where("position > ?", position)
+          .where.not(id: id)
+          .update_all("position = position - 1")
+
+        # Insert into new column: shift up items at and after target position
+        self.class.where(board_column_id: new_column_id, deleted_at: nil)
+          .where("position >= ?", new_position)
+          .where.not(id: id)
+          .update_all("position = position + 1")
+
+        update_columns(board_column_id: new_column_id, position: new_position)
+      else
+        move_to_position(new_position)
+      end
+    end
+  end
 end

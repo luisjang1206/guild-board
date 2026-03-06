@@ -1,0 +1,76 @@
+<div id="board_column_<%= @board_column.id %>"
+     class="flex w-80 flex-shrink-0 flex-col"
+     data-column-id="<%= @board_column.id %>"
+     data-column-draggable>
+  <%# Column header %>
+  <div class="mb-3 flex items-center justify-between border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0px_#000000]"
+       data-controller="column-edit"
+       data-column-edit-url-value="<%= project_board_column_path(project, @board_column) %>">
+    <%# Display mode: click to edit %>
+    <div data-column-edit-target="display"
+         data-action="click->column-edit#edit"
+         class="cursor-pointer"
+         title="<%= t("board_column.click_to_edit") %>">
+      <h2 class="text-sm font-bold uppercase tracking-wide text-black hover:underline">
+        <%= @board_column.name %>
+      </h2>
+    </div>
+
+    <%# Edit mode: inline input (hidden by default) %>
+    <div data-column-edit-target="input"
+         class="hidden flex-1 mr-2"
+         data-action="keydown->column-edit#keydown">
+      <input type="text"
+             value="<%= @board_column.name %>"
+             class="w-full border-2 border-black px-2 py-0.5 text-sm font-bold uppercase shadow-[3px_3px_0px_#000000] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1"
+             aria-label="<%= t("board_column.edit_name") %>">
+    </div>
+
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <span class="border-2 border-black bg-yellow-300 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]">
+        <%= task_count %>
+      </span>
+      <%= link_to new_project_task_path(project, board_column_id: @board_column.id),
+            data: { turbo_frame: "modal" },
+            class: "border-2 border-black bg-white px-2 py-0.5 text-sm font-bold leading-none shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]",
+            aria: { label: t("board_column.add_task", name: @board_column.name) } do %>
+        +
+      <% end %>
+
+      <%# Delete column button %>
+      <%= button_to project_board_column_path(project, @board_column),
+            method: :delete,
+            data: {
+              turbo_confirm: t("board_column.confirm_delete", name: @board_column.name),
+              turbo_stream: true
+            },
+            class: "border-2 border-black bg-white px-2 py-0.5 text-xs font-bold leading-none shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-red-50 hover:shadow-[4px_4px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]",
+            aria: { label: t("board_column.delete", name: @board_column.name) },
+            form: { class: "inline" } do %>
+        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Task list area %>
+  <div id="<%= dom_id %>"
+       class="flex min-h-32 flex-col gap-3"
+       data-controller="drag"
+       data-drag-project-id-value="<%= @board_column.project_id %>">
+    <% if @tasks.empty? %>
+      <%= render EmptyStateComponent.new(message: t("board_column.no_tasks"), style: :neo) do |c| %>
+        <% c.with_icon do %>
+          <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 0 2-2h2a2 2 0 0 0 2 2" />
+          </svg>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% @tasks.each do |task| %>
+        <%= render TaskCardComponent.new(task: task) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

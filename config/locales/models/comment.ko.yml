@@ -1,0 +1,8 @@
+ko:
+  comments:
+    form:
+      placeholder: "댓글을 작성하세요..."
+      submit: 댓글 작성
+    author:
+      agent: 에이전트
+      user: 사용자

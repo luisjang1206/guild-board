@@ -1,0 +1,12 @@
+<%= form_with url: project_task_checklists_path(project, task),
+    id: "checklist-add-form",
+    class: "flex gap-2 mt-3" do |form| %>
+  <%= form.text_field :content,
+      name: "checklist[content]",
+      placeholder: t("checklists.form.placeholder"),
+      required: true,
+      autocomplete: "off",
+      class: "flex-1 border-2 border-black px-3 py-1.5 text-sm shadow-[3px_3px_0px_#000000] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000]" %>
+  <%= form.submit t("checklists.form.add"),
+      class: "cursor-pointer border-2 border-black bg-yellow-300 px-4 py-1.5 text-sm font-bold uppercase shadow-[3px_3px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]" %>
+<% end %>

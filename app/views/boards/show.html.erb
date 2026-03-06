@@ -1,0 +1,95 @@
+<% content_for :main_class, "mt-16" %>
+<%# Board header %>
+<div class="border-b-2 border-black bg-white px-6 py-4">
+  <div class="mx-auto max-w-full">
+    <div class="flex items-center gap-4">
+      <%= link_to project_path(@project),
+            class: "inline-flex items-center gap-1 border-2 border-black bg-white px-3 py-1.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]" do %>
+        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+        <%= t("board.back_to_project") %>
+      <% end %>
+
+      <div class="flex items-center gap-3">
+        <h1 class="text-xl font-bold uppercase tracking-wide text-black">
+          <%= @project.name %>
+        </h1>
+        <span class="border-2 border-black bg-black px-2 py-0.5 text-xs font-bold uppercase text-white shadow-[2px_2px_0px_#666666]">
+          <%= t("board.title") %>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%# Filter bar %>
+<%= render FilterBarComponent.new(project: @project, labels: @labels, filters: @filters) %>
+
+<%# Kanban board area — wrapped in turbo-frame for filter compatibility %>
+<%= turbo_frame_tag "board" do %>
+  <div class="flex gap-6 overflow-x-auto p-6 min-h-[calc(100vh-12rem)]"
+       data-controller="column-drag"
+       data-column-drag-project-id-value="<%= @project.id %>">
+    <% @board_columns.each do |column| %>
+      <%= render KanbanColumnComponent.new(board_column: column, tasks: column.active_tasks(@filters)) %>
+    <% end %>
+
+    <% if @board_columns.empty? %>
+      <div class="flex flex-1 items-center justify-center">
+        <div class="border-2 border-black bg-white p-12 shadow-[4px_4px_0px_#000000] text-center">
+          <svg class="mx-auto mb-4 h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125Z" />
+          </svg>
+          <p class="text-sm font-bold uppercase text-gray-500"><%= t("board.no_columns") %></p>
+          <p class="mt-1 text-xs text-gray-400"><%= t("board.no_columns_hint") %></p>
+        </div>
+      </div>
+    <% end %>
+
+    <%# Add column panel %>
+    <div id="add-column-btn" class="flex w-80 flex-shrink-0 flex-col" data-controller="add-column">
+      <%# Toggle button %>
+      <button type="button"
+              data-action="click->add-column#show"
+              data-add-column-target="trigger"
+              class="flex w-full items-center justify-center gap-2 border-2 border-black border-dashed bg-white px-4 py-3 text-xs font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:border-solid hover:bg-yellow-50 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        <%= t("board.add_column") %>
+      </button>
+
+      <%# Inline create form (hidden by default) %>
+      <div data-add-column-target="form" class="hidden border-2 border-black bg-white p-4 shadow-[4px_4px_0px_#000000]">
+        <%= form_with url: project_board_columns_path(@project),
+              data: { turbo_stream: true, action: "turbo:submit-end->add-column#submitEnd" } do |f| %>
+          <div class="flex flex-col gap-3">
+            <div>
+              <%= f.label :name,
+                    t("board_column.name"),
+                    class: "block text-xs font-bold uppercase text-black mb-1" %>
+              <%= f.text_field :name,
+                    placeholder: t("board_column.name_placeholder"),
+                    autofocus: true,
+                    required: true,
+                    class: "w-full border-2 border-black px-3 py-2 text-sm font-bold shadow-[3px_3px_0px_#000000] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1",
+                    data: { add_column_target: "nameInput", action: "keydown->add-column#keydown" } %>
+            </div>
+            <div class="flex gap-2">
+              <%= f.submit t("board_column.add"),
+                    class: "flex-1 border-2 border-black bg-black px-3 py-2 text-xs font-bold uppercase text-white shadow-[3px_3px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000] cursor-pointer" %>
+              <button type="button"
+                      data-action="click->add-column#hide"
+                      class="border-2 border-black bg-white px-3 py-2 text-xs font-bold uppercase shadow-[3px_3px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]">
+                <%= t("defaults.buttons.cancel") %>
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= turbo_frame_tag "modal" %>

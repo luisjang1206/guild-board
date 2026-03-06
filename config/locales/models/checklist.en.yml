@@ -1,0 +1,7 @@
+en:
+  checklists:
+    progress:
+      title: Checklist
+    form:
+      placeholder: "Add an item..."
+      add: Add

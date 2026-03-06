@@ -11,6 +11,16 @@ Rails.application.routes.draw do
         post :regenerate
       end
     end
+    resource :board, only: [ :show ]
+    resources :tasks, except: [ :index ] do
+      member { patch :move }
+      resources :comments, only: [ :create ]
+      resources :checklists, only: [ :create, :update, :destroy ]
+    end
+    resources :board_columns, only: [ :create, :update, :destroy ] do
+      member { patch :move }
+    end
+    resources :labels
   end
   root "pages#home"
   resource :session

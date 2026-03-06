@@ -1,0 +1,33 @@
+ko:
+  board:
+    title: 보드
+    back_to_project: 프로젝트로 돌아가기
+    no_columns: 칼럼이 없습니다
+    no_columns_hint: 칼럼을 추가하여 시작하세요
+    add_column: 칼럼 추가
+  board_column:
+    name: 칼럼 이름
+    name_placeholder: "예: 할 일, 진행 중..."
+    add: 칼럼 추가
+    click_to_edit: 클릭하여 칼럼 이름 수정
+    edit_name: 칼럼 이름 수정
+    no_tasks: 이 칼럼에 태스크가 없습니다
+    add_task: "%{name}에 태스크 추가"
+    confirm_delete: "\"%{name}\" 칼럼을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+    delete: "%{name} 칼럼 삭제"
+  board_columns:
+    cannot_delete_with_tasks: 활성 태스크가 있는 칼럼은 삭제할 수 없습니다
+  filter_bar:
+    priority: 우선순위
+    all_priorities: 모든 우선순위
+    priority_low: 낮음
+    priority_medium: 보통
+    priority_high: 높음
+    label: 라벨
+    all_labels: 모든 라벨
+    creator: 생성자
+    all_creators: 모든 생성자
+    creator_user: 사용자
+    creator_agent: 에이전트
+    filtered: 필터 적용됨
+    clear: 초기화

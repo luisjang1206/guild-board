@@ -11,6 +11,7 @@ en:
       back: "Back"
       confirm: "Confirm"
       close: "Close"
+      close_modal: "Close modal"
     flash:
       success: "Completed successfully."
       error: "An error occurred."
@@ -19,6 +20,7 @@ en:
     navigation:
       home: "Home"
       dashboard: "Dashboard"
+      projects: "Projects"
       settings: "Settings"
       login: "Log in"
       logout: "Log out"

@@ -1,0 +1,26 @@
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="frame-modal">
+    <div data-frame-modal-target="dialog"
+         data-action="click->frame-modal#closeOnBackdrop"
+         class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 p-4"
+         aria-modal="true"
+         role="dialog"
+         aria-labelledby="modal-title-new">
+      <div class="relative w-full max-w-lg border-2 border-black bg-white p-6 shadow-[8px_8px_0px_#000000]">
+        <%# Close button %>
+        <button type="button"
+                data-action="click->frame-modal#close"
+                class="absolute right-4 top-4 border-2 border-black p-1 transition-all hover:bg-gray-100"
+                aria-label="<%= t("defaults.buttons.close_modal") %>">
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+
+        <h2 id="modal-title-new" class="mb-4 text-lg font-bold uppercase tracking-wide text-black"><%= t("tasks.new.title") %></h2>
+
+        <%= render "form", task: @task, project: @project, board_columns: @board_columns %>
+      </div>
+    </div>
+  </div>
+<% end %>

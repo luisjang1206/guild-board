@@ -19,3 +19,33 @@ en:
     invalid_token: "Password reset link is invalid or has expired."
   rate_limit:
     exceeded: "Too many requests. Please try again later."
+  common:
+    cancel: "Cancel"
+  filter_bar:
+    priority: "Priority"
+    label: "Label"
+    creator: "Creator"
+    all_priorities: "All Priorities"
+    all_labels: "All Labels"
+    all_creators: "All Creators"
+    priority_low: "Low"
+    priority_medium: "Medium"
+    priority_high: "High"
+    creator_user: "User"
+    creator_agent: "Agent"
+    filtered: "Filtered"
+    clear: "Clear"
+  board:
+    no_columns: "No columns yet"
+    no_columns_hint: "Add columns to start organizing tasks"
+    add_column: "Add Column"
+  board_column:
+    click_to_edit: "Click to edit column name"
+    edit_name: "Edit column name"
+    add_task: "Add task to %{name}"
+    confirm_delete: "Delete column \"%{name}\" and all its tasks?"
+    delete: "Delete column %{name}"
+    no_tasks: "No tasks yet"
+    name: "Column Name"
+    name_placeholder: "e.g. In Progress"
+    add: "Add Column"
