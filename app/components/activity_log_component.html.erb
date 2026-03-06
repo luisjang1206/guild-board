@@ -1,0 +1,15 @@
+<div class="<%= style_for(:wrapper) %>">
+  <div class="<%= actor_icon_class %>">
+    <%= actor_icon_svg %>
+  </div>
+  <div class="<%= style_for(:content) %>">
+    <p class="<%= style_for(:action_text) %>">
+      <%= I18n.t("activity_log.actor_types.#{@activity_log.actor_type}", default: @activity_log.actor_type) %>
+      <%= action_text %>
+    </p>
+    <% if formatted_metadata.present? %>
+      <p class="<%= style_for(:metadata) %>"><%= formatted_metadata %></p>
+    <% end %>
+    <p class="<%= style_for(:timestamp) %>"><%= time_ago %></p>
+  </div>
+</div>

@@ -12,10 +12,13 @@ Rails.application.configure do
     policy.object_src  :none
     policy.script_src  :self, :unsafe_inline, "https://cdn.jsdelivr.net"
     policy.style_src   :self, :unsafe_inline
-    policy.connect_src :self, "ws://localhost:*", "wss://localhost:*"
-    # Production: policy.connect_src :self, "wss://#{your_domain}"
+    if Rails.env.production?
+      policy.connect_src :self, "wss://#{ENV.fetch('APP_DOMAIN', 'localhost')}"
+    else
+      policy.connect_src :self, "ws://localhost:*", "wss://localhost:*"
+    end
   end
 
-  # Report violations without blocking (switch to false for enforcement)
-  config.content_security_policy_report_only = true
+  # Enforce CSP (report_only = false means violations are blocked, not just reported)
+  config.content_security_policy_report_only = false
 end

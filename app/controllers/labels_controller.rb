@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LabelsController < ApplicationController
+  include ActivityLoggable
+
   before_action :set_project
   before_action :set_label, only: [ :edit, :update, :destroy ]
 
@@ -14,6 +16,7 @@ class LabelsController < ApplicationController
     authorize @project, :update?
     @label = @project.labels.build(label_params)
     if @label.save
+      log_activity(action: "label_created", metadata: { name: [ nil, @label.name ] })
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.append("labels-list",

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
+  include ActivityLoggable
+
   before_action :set_project
   before_action :set_task
 
@@ -10,6 +12,7 @@ class CommentsController < ApplicationController
     @comment.author_type = "user"
     @comment.author_id = Current.user.id.to_s
     if @comment.save
+      log_activity(action: "comment_added", task: @task, metadata: { content: @comment.content })
       redirect_to project_task_path(@project, @task)
     else
       head :unprocessable_entity

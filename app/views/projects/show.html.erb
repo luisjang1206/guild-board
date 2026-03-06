@@ -49,7 +49,7 @@
           <%= render ProjectKeyComponent.new(
             project_key: key,
             project: @project,
-            raw_key: (flash[:project_key] if key == @project_keys.first && flash[:project_key].present?)
+            raw_key: (flash[:project_key] if flash[:project_key_prefix].present? && key.key_prefix == flash[:project_key_prefix])
           ) %>
         <% end %>
       </div>

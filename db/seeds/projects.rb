@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+return unless Rails.env.development?
 return if Project.exists?
 
 user = User.find_by(role: :super_admin) || User.first

@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#show"
     resources :users, only: [ :index, :show ]
+    resources :project_keys, only: [ :index ]
+    resources :projects, only: [ :index, :show ]
   end
   get "/health", to: "health#show"
   resources :projects do
@@ -21,6 +23,7 @@ Rails.application.routes.draw do
       member { patch :move }
     end
     resources :labels
+    resources :activity_logs, only: [ :index ]
   end
   root "pages#home"
   resource :session

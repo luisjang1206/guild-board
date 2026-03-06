@@ -9,7 +9,7 @@ class TaskBroadcastTest < ActiveSupport::TestCase
   setup do
     @project = projects(:user_one_project)
     @column = board_columns(:backlog)
-    @stream = stream_name_for([@project, :board])
+    @stream = stream_name_for([ @project, :board ])
   end
 
   test "broadcasts append on create" do
@@ -28,7 +28,7 @@ class TaskBroadcastTest < ActiveSupport::TestCase
 
   test "broadcasts replace on update" do
     task = tasks(:active_task)
-    stream = stream_name_for([task.project, :board])
+    stream = stream_name_for([ task.project, :board ])
     perform_enqueued_jobs do
       assert_broadcasts(stream, 1) do
         task.update!(title: "Updated Title")
@@ -38,7 +38,7 @@ class TaskBroadcastTest < ActiveSupport::TestCase
 
   test "broadcasts remove on soft_delete" do
     task = tasks(:active_task)
-    stream = stream_name_for([task.project, :board])
+    stream = stream_name_for([ task.project, :board ])
     assert_broadcasts(stream, 1) do
       task.soft_delete
     end
@@ -46,7 +46,7 @@ class TaskBroadcastTest < ActiveSupport::TestCase
 
   test "broadcasts replace on restore" do
     task = tasks(:deleted_task)
-    stream = stream_name_for([task.project, :board])
+    stream = stream_name_for([ task.project, :board ])
     perform_enqueued_jobs do
       assert_broadcasts(stream, 1) do
         task.restore

@@ -14,8 +14,9 @@ module McpAuthentication
   def authenticate_project_key!
     raw_key = extract_header("X-Project-Key")
     return false if raw_key.blank?
+    return false if raw_key.length < ProjectKey::KEY_PREFIX_LENGTH
 
-    prefix = raw_key[0, 13]
+    prefix = raw_key[0, ProjectKey::KEY_PREFIX_LENGTH]
     project_key = ProjectKey.active.find_by(key_prefix: prefix)
     return false unless project_key&.authenticate(raw_key)
 

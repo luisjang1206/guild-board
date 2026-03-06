@@ -36,6 +36,25 @@ class ProjectKeyTest < ActiveSupport::TestCase
     assert @key.errors[:name].any?
   end
 
+  test "invalid when name exceeds 100 characters" do
+    @key.name = "a" * 101
+    assert_not @key.valid?
+    assert @key.errors[:name].any?
+  end
+
+  test "invalid when key_prefix is not exactly 13 characters" do
+    @key.key_prefix = "guild_short"
+    assert_not @key.valid?
+    assert @key.errors[:key_prefix].any?
+  end
+
+  test "invalid when key_prefix is not unique" do
+    duplicate = @key.dup
+    duplicate.key_digest = BCrypt::Password.create("guild_test1234567890abcdef12_dup")
+    assert_not duplicate.valid?
+    assert duplicate.errors[:key_prefix].any?
+  end
+
   # -- Scope: active --
 
   test "active scope returns only active keys" do
@@ -100,6 +119,12 @@ class ProjectKeyTest < ActiveSupport::TestCase
     # Check persisted state
     assert_not_nil record.key_digest
     assert_not_nil record.key_prefix
+  end
+
+  test "generate_for never exposes key_digest equal to raw key" do
+    project = projects(:user_two_project)
+    record, raw_key = ProjectKey.generate_for(project, name: "Digest Safety Key")
+    assert_not_equal raw_key, record.key_digest
   end
 
   # -- authenticate --

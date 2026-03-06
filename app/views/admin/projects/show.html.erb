@@ -1,0 +1,84 @@
+<% content_for(:title) { @project.name } %>
+
+<div class="mb-6">
+  <%= link_to t("admin.projects.back_to_list"), admin_projects_path, class: "text-blue-600 hover:underline text-sm" %>
+</div>
+
+<div class="bg-white shadow rounded-lg p-6 mb-8">
+  <h1 class="text-2xl font-bold text-gray-900 mb-2"><%= @project.name %></h1>
+  <p class="text-sm text-gray-500 mb-6"><%= t("admin.projects.owner") %>: <%= @project.user.email_address %></p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div class="bg-gray-50 rounded-lg p-4">
+      <dt class="text-sm font-medium text-gray-500"><%= t("admin.projects.tasks_count") %></dt>
+      <dd class="mt-1 text-2xl font-bold text-gray-900"><%= @tasks_count %></dd>
+    </div>
+    <div class="bg-gray-50 rounded-lg p-4">
+      <dt class="text-sm font-medium text-gray-500"><%= t("admin.projects.active_keys_count") %></dt>
+      <dd class="mt-1 text-2xl font-bold text-gray-900"><%= @active_keys_count %></dd>
+    </div>
+    <div class="bg-gray-50 rounded-lg p-4">
+      <dt class="text-sm font-medium text-gray-500"><%= t("admin.projects.created_at") %></dt>
+      <dd class="mt-1 text-lg font-semibold text-gray-900"><%= l(@project.created_at, format: :long) %></dd>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white shadow rounded-lg overflow-hidden mb-8">
+  <div class="px-6 py-4 border-b border-gray-200">
+    <h2 class="text-lg font-semibold text-gray-900"><%= t("admin.projects.project_keys") %></h2>
+  </div>
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.project_keys.name") %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.project_keys.key_prefix") %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.project_keys.active") %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.project_keys.last_used_at") %></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% @project_keys.each do |key| %>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= key.name %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-500"><%= key.key_prefix %>...</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <%= render(BadgeComponent.new(
+              label: key.active? ? t("admin.project_keys.active_badge") : t("admin.project_keys.inactive_badge"),
+              variant: key.active? ? :success : :error
+            )) %>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <% if key.respond_to?(:last_used_at) && key.last_used_at %>
+              <%= l(key.last_used_at, format: :short) %>
+            <% else %>
+              <%= t("admin.project_keys.never_used") %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="bg-white shadow rounded-lg overflow-hidden">
+  <div class="px-6 py-4 border-b border-gray-200">
+    <h2 class="text-lg font-semibold text-gray-900"><%= t("admin.projects.recent_activity") %></h2>
+  </div>
+  <div class="p-6">
+    <% if @recent_activities.any? %>
+      <ul class="space-y-3">
+        <% @recent_activities.each do |activity| %>
+          <li class="flex items-center gap-3 text-sm">
+            <span class="text-gray-400 shrink-0"><%= l(activity.created_at, format: :short) %></span>
+            <span class="text-gray-600">
+              <%= t("activity_log.actions.#{activity.action}", default: activity.action) %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-sm text-gray-500"><%= t("admin.projects.no_activity") %></p>
+    <% end %>
+  </div>
+</div>

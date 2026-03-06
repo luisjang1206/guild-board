@@ -8,7 +8,7 @@ class CommentBroadcastTest < ActiveSupport::TestCase
 
   setup do
     @task = tasks(:active_task)
-    @stream = stream_name_for([@task, :detail])
+    @stream = stream_name_for([ @task, :detail ])
   end
 
   test "broadcasts append on create" do

@@ -23,9 +23,12 @@ class ProjectKeysControllerTest < ActionDispatch::IntegrationTest
       post project_project_keys_url(@project), params: { project_key: { name: "New API Key" } }
     end
     assert_redirected_to project_url(@project)
-    # The raw key is exposed once in flash[:project_key]
+    # raw key is exposed once in flash[:project_key]
     assert flash[:project_key].present?
     assert flash[:project_key].start_with?("guild_")
+    # key_prefix is stored alongside so the view can match exactly the right key
+    assert flash[:project_key_prefix].present?
+    assert_equal flash[:project_key][0, 13], flash[:project_key_prefix]
   end
 
   # Non-owner cannot access another user's project — set_project uses
@@ -108,6 +111,9 @@ class ProjectKeysControllerTest < ActionDispatch::IntegrationTest
     # Raw key for the new key is exposed in flash
     assert flash[:project_key].present?
     assert flash[:project_key].start_with?("guild_")
+    # prefix is stored so the view matches exactly the newly generated key
+    assert flash[:project_key_prefix].present?
+    assert_equal flash[:project_key][0, 13], flash[:project_key_prefix]
   end
 
   test "regenerate new key name contains 'regenerated'" do

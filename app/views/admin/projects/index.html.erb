@@ -1,0 +1,32 @@
+<% content_for(:title) { t("admin.projects.title") } %>
+
+<h1 class="text-2xl font-bold text-gray-900 mb-8"><%= t("admin.projects.title") %></h1>
+
+<div class="bg-white shadow rounded-lg overflow-hidden">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.projects.name") %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.projects.owner") %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.projects.tasks_count") %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.projects.active_keys_count") %></th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t("admin.projects.created_at") %></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% @projects.each do |project| %>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <%= link_to project.name, admin_project_path(project), class: "text-blue-600 hover:underline" %>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= project.user.email_address %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= project.tasks.size %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= project.project_keys.select(&:active?).size %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= l(project.created_at, format: :short) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= render(PaginationComponent.new(pagy: @pagy)) %>

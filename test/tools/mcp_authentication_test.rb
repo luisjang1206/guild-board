@@ -84,6 +84,17 @@ class McpAuthenticationTest < ActiveSupport::TestCase
     assert_not tool.send(:authenticate_project_key!)
   end
 
+  test "fails when key is shorter than required prefix length" do
+    tool = build_tool("X-Project-Key" => "guild_short")
+    assert_not tool.send(:authenticate_project_key!)
+  end
+
+  test "fails when key is exactly prefix length with no payload" do
+    # 13자 정확히 = prefix만 존재, payload 없음 → 인증 실패해야 한다
+    tool = build_tool("X-Project-Key" => "guild_test123")
+    assert_not tool.send(:authenticate_project_key!)
+  end
+
   # ---------------------------------------------------------------------------
   # last_used_at 업데이트
   # ---------------------------------------------------------------------------

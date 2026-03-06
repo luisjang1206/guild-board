@@ -8,7 +8,7 @@ class BoardColumnBroadcastTest < ActiveSupport::TestCase
 
   setup do
     @project = projects(:user_one_project)
-    @stream = stream_name_for([@project, :board])
+    @stream = stream_name_for([ @project, :board ])
   end
 
   test "broadcasts before on create" do

@@ -16,8 +16,18 @@ class MoveTaskTool < ApplicationTool
     target_column = find_column(board_column)
     return JSON.generate({ error: "칼럼을 찾을 수 없습니다 (#{board_column})" }) unless target_column
 
+    old_column_name = task.board_column.name
     new_position = position || target_column.tasks.active.count
     task.move_to_column(target_column.id, new_position)
+
+    ActivityLogJob.perform_later(
+      project_id: Current.project.id,
+      task_id: task.id,
+      actor_type: "agent",
+      actor_id: Current.agent_name,
+      action: "task_moved",
+      metadata: { board_column: [ old_column_name, target_column.name ] }
+    )
 
     JSON.generate({
       id: task.id,

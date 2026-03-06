@@ -18,6 +18,15 @@ class AddCommentTool < ApplicationTool
       author_id: Current.agent_name
     )
 
+    ActivityLogJob.perform_later(
+      project_id: Current.project.id,
+      task_id: task.id,
+      actor_type: "agent",
+      actor_id: Current.agent_name,
+      action: "comment_added",
+      metadata: { content: comment.content }
+    )
+
     JSON.generate({
       id: comment.id,
       content: comment.content,

@@ -86,7 +86,7 @@ class ProjectTest < ActiveSupport::TestCase
   test "default board_columns have positions 0 through 4" do
     project = Project.create!(name: "Positioned Columns Project", user: users(:regular))
     positions = project.board_columns.order(:position).pluck(:position)
-    assert_equal [0, 1, 2, 3, 4], positions
+    assert_equal [ 0, 1, 2, 3, 4 ], positions
   end
 
   test "creates 1 project_key after project creation" do

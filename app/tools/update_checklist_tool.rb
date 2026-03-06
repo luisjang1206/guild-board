@@ -18,6 +18,15 @@ class UpdateChecklistTool < ApplicationTool
 
     checklist.update!(completed: completed)
 
+    ActivityLogJob.perform_later(
+      project_id: Current.project.id,
+      task_id: checklist.task_id,
+      actor_type: "agent",
+      actor_id: Current.agent_name,
+      action: "checklist_toggled",
+      metadata: { content: checklist.content, completed: checklist.completed }
+    )
+
     JSON.generate({
       id: checklist.id,
       content: checklist.content,

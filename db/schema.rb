@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_06_104900) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_06_165928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_06_104900) do
     t.jsonb "metadata", default: {}
     t.bigint "project_id", null: false
     t.bigint "task_id"
+    t.index ["created_at"], name: "index_activity_logs_on_created_at"
     t.index ["metadata"], name: "index_activity_logs_on_metadata", using: :gin
     t.index ["project_id"], name: "index_activity_logs_on_project_id"
     t.index ["task_id"], name: "index_activity_logs_on_task_id"
@@ -54,6 +55,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_06_104900) do
     t.text "content", null: false
     t.datetime "created_at", null: false
     t.bigint "task_id", null: false
+    t.index ["created_at"], name: "index_comments_on_created_at"
     t.index ["task_id"], name: "index_comments_on_task_id"
   end
 

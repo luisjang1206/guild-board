@@ -8,8 +8,8 @@ class ChecklistBroadcastTest < ActiveSupport::TestCase
 
   setup do
     @task = tasks(:active_task)
-    @detail_stream = stream_name_for([@task, :detail])
-    @board_stream = stream_name_for([@task.project, :board])
+    @detail_stream = stream_name_for([ @task, :detail ])
+    @board_stream = stream_name_for([ @task.project, :board ])
   end
 
   test "broadcasts append to detail stream on create" do

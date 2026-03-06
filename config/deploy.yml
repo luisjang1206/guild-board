@@ -37,6 +37,8 @@ env:
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
+    - MCP_ALLOWED_ORIGIN
+    - APP_DOMAIN
 
 proxy:
   host: YOUR_DOMAIN

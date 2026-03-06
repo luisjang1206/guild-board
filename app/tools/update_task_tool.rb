@@ -21,6 +21,15 @@ class UpdateTaskTool < ApplicationTool
 
     task.update!(attrs)
 
+    ActivityLogJob.perform_later(
+      project_id: Current.project.id,
+      task_id: task.id,
+      actor_type: "agent",
+      actor_id: Current.agent_name,
+      action: "task_updated",
+      metadata: task.saved_changes.except("updated_at")
+    )
+
     JSON.generate({
       id: task.id,
       title: task.title,

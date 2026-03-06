@@ -1,4 +1,6 @@
 class BoardColumnsController < ApplicationController
+  include ActivityLoggable
+
   before_action :set_project
   before_action :set_column, only: [ :update, :destroy, :move ]
 
@@ -6,6 +8,7 @@ class BoardColumnsController < ApplicationController
     authorize @project, :update?
     @column = @project.board_columns.build(column_params)
     if @column.save
+      log_activity(action: "column_created", metadata: { name: [ nil, @column.name ] })
       redirect_to project_board_path(@project)
     else
       redirect_to project_board_path(@project), alert: @column.errors.full_messages.join(", ")
@@ -15,6 +18,7 @@ class BoardColumnsController < ApplicationController
   def update
     authorize @project, :update?
     if @column.update(column_params)
+      log_activity(action: "column_updated", metadata: @column.saved_changes.except("updated_at"))
       head :ok
     else
       head :unprocessable_entity
@@ -29,6 +33,7 @@ class BoardColumnsController < ApplicationController
         format.html { redirect_to project_board_path(@project), alert: t("board_columns.cannot_delete_with_tasks") }
       end
     else
+      log_activity(action: "column_deleted", metadata: { name: @column.name })
       @column.destroy
       redirect_to project_board_path(@project)
     end

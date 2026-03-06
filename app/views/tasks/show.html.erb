@@ -128,6 +128,21 @@
             </div>
           <% end %>
 
+          <%# Activity Log %>
+          <div>
+            <h3 class="mb-3 text-xs font-bold uppercase text-gray-500"><%= t("activity_log.title") %></h3>
+            <div class="space-y-0">
+              <% @task.activity_logs.order(created_at: :desc).limit(10).each do |activity_log| %>
+                <%= render(ActivityLogComponent.new(activity_log: activity_log, style: :neo)) %>
+              <% end %>
+              <% if @task.activity_logs.empty? %>
+                <div class="border-2 border-black bg-gray-50 p-4 text-center shadow-[2px_2px_0px_#000000]">
+                  <p class="text-xs font-bold uppercase text-gray-400"><%= t("activity_log.empty") %></p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
         </div>
 
         <%# Footer: actions %>

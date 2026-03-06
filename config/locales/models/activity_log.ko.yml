@@ -1,0 +1,22 @@
+ko:
+  activity_log:
+    title: "활동 타임라인"
+    actions:
+      task_created: "태스크를 생성했습니다"
+      task_updated: "태스크를 수정했습니다"
+      task_moved: "태스크를 이동했습니다"
+      task_deleted: "태스크를 삭제했습니다"
+      comment_added: "댓글을 추가했습니다"
+      checklist_toggled: "체크리스트 항목을 토글했습니다"
+      column_created: "컬럼을 생성했습니다"
+      column_updated: "컬럼을 수정했습니다"
+      column_deleted: "컬럼을 삭제했습니다"
+      column_moved: "컬럼을 이동했습니다"
+      label_created: "라벨을 생성했습니다"
+      label_updated: "라벨을 수정했습니다"
+      label_deleted: "라벨을 삭제했습니다"
+    actor_types:
+      user: "사용자"
+      agent: "에이전트"
+    empty: "아직 활동이 없습니다"
+    load_more: "더 보기"

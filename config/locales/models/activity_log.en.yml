@@ -1,0 +1,22 @@
+en:
+  activity_log:
+    title: "Activity Timeline"
+    actions:
+      task_created: "created a task"
+      task_updated: "updated a task"
+      task_moved: "moved a task"
+      task_deleted: "deleted a task"
+      comment_added: "added a comment"
+      checklist_toggled: "toggled a checklist item"
+      column_created: "created a column"
+      column_updated: "updated a column"
+      column_deleted: "deleted a column"
+      column_moved: "moved a column"
+      label_created: "created a label"
+      label_updated: "updated a label"
+      label_deleted: "deleted a label"
+    actor_types:
+      user: "User"
+      agent: "Agent"
+    empty: "No activity yet"
+    load_more: "Load More"

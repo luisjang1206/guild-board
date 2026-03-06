@@ -26,6 +26,15 @@ class CreateTaskTool < ApplicationTool
       creator_id: Current.agent_name
     )
 
+    ActivityLogJob.perform_later(
+      project_id: Current.project.id,
+      task_id: task.id,
+      actor_type: "agent",
+      actor_id: Current.agent_name,
+      action: "task_created",
+      metadata: { title: [ nil, task.title ], board_column: [ nil, column.name ] }
+    )
+
     JSON.generate({
       id: task.id,
       title: task.title,

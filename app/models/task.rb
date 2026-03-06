@@ -11,6 +11,7 @@ class Task < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :task_labels, dependent: :destroy
   has_many :labels, through: :task_labels
+  has_many :activity_logs, dependent: :nullify
 
   enum :priority, { low: 0, medium: 1, high: 2 }, default: :low
 
