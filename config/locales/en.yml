@@ -1,0 +1,21 @@
+en:
+  registrations:
+    new:
+      title: "Sign Up"
+      submit: "Create Account"
+      login_prompt: "Already have an account?"
+      login_link: "Log in"
+    create:
+      success: "Account created successfully."
+  sessions:
+    create:
+      invalid: "Invalid email address or password."
+  passwords:
+    create:
+      sent: "Password reset instructions sent (if account exists)."
+    update:
+      success: "Password has been reset."
+      mismatch: "Passwords did not match."
+    invalid_token: "Password reset link is invalid or has expired."
+  rate_limit:
+    exceeded: "Too many requests. Please try again later."

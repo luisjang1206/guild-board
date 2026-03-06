@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      RAILS_ENV: test
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      # Step 1: Ruby setup + dependencies (bundler-cache auto-caches gems)
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y libpq-dev
+
+      # Step 2: Precompile assets (Tailwind CSS v4 + Propshaft)
+      - name: Precompile assets
+        run: bin/rails assets:precompile
+
+      # Step 3: DB setup (creates 4 logical databases: primary, queue, cache, cable)
+      - name: Setup databases
+        run: bin/rails db:prepare
+
+      # Step 4: RuboCop lint
+      - name: RuboCop
+        run: bundle exec rubocop
+
+      # Step 5: Brakeman security scan
+      - name: Brakeman
+        run: bundle exec brakeman --no-pager
+
+      # Step 6: Unit & Integration tests (Minitest)
+      - name: Run tests
+        run: bin/rails test
+
+      # Step 7: System tests (Capybara + headless Chrome)
+      - name: Run system tests
+        run: bin/rails test:system
+        env:
+          CHROME_NO_SANDBOX: "true"

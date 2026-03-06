@@ -1,0 +1,19 @@
+en:
+  admin:
+    title: "Admin"
+    sidebar:
+      title: "Admin Panel"
+      dashboard: "Dashboard"
+      users: "User Management"
+      back_to_site: "Back to Site"
+    dashboard:
+      title: "Dashboard"
+      total_users: "Total Users"
+      recent_users: "Recent Users"
+    users:
+      title: "User Management"
+      email: "Email"
+      role: "Role"
+      created_at: "Joined"
+      updated_at: "Updated"
+      back_to_list: "Back to List"

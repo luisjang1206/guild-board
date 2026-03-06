@@ -1,0 +1,31 @@
+<div data-controller="modal">
+  <% if trigger? %>
+    <div data-action="click->modal#open">
+      <%= trigger %>
+    </div>
+  <% end %>
+
+  <%# dialogTarget이 backdrop 겸 scroll container 역할 %>
+  <%# closeOnBackdrop: event.target === dialogTarget일 때만 닫힘 (패널 내부 클릭은 무시) %>
+  <div data-modal-target="dialog"
+       data-action="click->modal#closeOnBackdrop"
+       class="hidden fixed inset-0 z-50 flex min-h-full items-center justify-center overflow-y-auto bg-gray-500/75 p-4"
+       aria-modal="true"
+       role="dialog">
+    <div class="relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl">
+      <%# Close button %>
+      <div class="absolute right-4 top-4">
+        <button type="button" data-action="click->modal#close" class="rounded-md text-gray-400 hover:text-gray-500 focus:outline-none">
+          <span class="sr-only"><%= t("defaults.buttons.close") %></span>
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+      </div>
+
+      <% if body? %>
+        <%= body %>
+      <% end %>
+    </div>
+  </div>
+</div>

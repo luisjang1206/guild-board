@@ -1,0 +1,24 @@
+# Docker Compose — Local Development (DB Only)
+# Usage: docker-compose up db
+# PRD 3.4: PostgreSQL만 Docker, Rails 앱은 bin/dev로 로컬 실행
+
+services:
+  db:
+    image: postgres:17
+    container_name: guild_board_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

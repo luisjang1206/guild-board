@@ -1,0 +1,19 @@
+ko:
+  admin:
+    title: "관리자"
+    sidebar:
+      title: "관리자 패널"
+      dashboard: "대시보드"
+      users: "사용자 관리"
+      back_to_site: "사이트로 돌아가기"
+    dashboard:
+      title: "대시보드"
+      total_users: "전체 사용자"
+      recent_users: "최근 가입 사용자"
+    users:
+      title: "사용자 관리"
+      email: "이메일"
+      role: "역할"
+      created_at: "가입일"
+      updated_at: "수정일"
+      back_to_list: "목록으로 돌아가기"

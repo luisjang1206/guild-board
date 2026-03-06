@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+echo "Running pre-deploy checks..."
+
+# Verify no uncommitted changes
+if [ -n "$(git status --porcelain)" ]; then
+  echo "ERROR: Uncommitted changes detected. Commit or stash before deploying."
+  exit 1
+fi
+
+echo "Pre-deploy checks passed."

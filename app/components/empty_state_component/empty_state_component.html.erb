@@ -1,0 +1,15 @@
+<div class="py-12 text-center">
+  <% if icon? %>
+    <div class="mx-auto mb-4 text-gray-400">
+      <%= icon %>
+    </div>
+  <% end %>
+
+  <p class="text-sm text-gray-500"><%= @message %></p>
+
+  <% if action? %>
+    <div class="mt-6">
+      <%= action %>
+    </div>
+  <% end %>
+</div>

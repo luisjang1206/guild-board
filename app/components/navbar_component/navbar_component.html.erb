@@ -1,0 +1,47 @@
+<nav class="bg-white shadow" data-controller="navbar" data-navbar-hidden-class="hidden">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 justify-between">
+      <%# Logo / Home link %>
+      <div class="flex shrink-0 items-center">
+        <%= link_to t("defaults.navigation.home"), root_path, class: "text-lg font-bold text-gray-900" %>
+      </div>
+
+      <%# Desktop navigation %>
+      <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
+        <% if signed_in? %>
+          <%= link_to t("defaults.navigation.dashboard"), root_path, class: "rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900" %>
+          <%= button_to t("defaults.navigation.logout"), session_path, method: :delete, class: "rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900" %>
+        <% else %>
+          <%= link_to t("defaults.navigation.login"), new_session_path, class: "rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900" %>
+          <%= link_to t("defaults.navigation.signup"), new_registration_path, class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" %>
+        <% end %>
+      </div>
+
+      <%# Mobile hamburger button %>
+      <div class="flex items-center sm:hidden">
+        <button type="button"
+                data-action="click->navbar#toggle"
+                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none"
+                aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <%# Mobile menu %>
+  <div data-navbar-target="menu" class="hidden sm:hidden">
+    <div class="space-y-1 px-2 pb-3 pt-2">
+      <% if signed_in? %>
+        <%= link_to t("defaults.navigation.dashboard"), root_path, class: "block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900" %>
+        <%= button_to t("defaults.navigation.logout"), session_path, method: :delete, class: "block w-full rounded-md px-3 py-2 text-left text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900" %>
+      <% else %>
+        <%= link_to t("defaults.navigation.login"), new_session_path, class: "block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900" %>
+        <%= link_to t("defaults.navigation.signup"), new_registration_path, class: "block rounded-md px-3 py-2 text-base font-medium text-indigo-600 hover:bg-gray-100" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,76 @@
+# Kamal 2 Deployment Configuration
+# Docs: https://kamal-deploy.org/docs/configuration/overview/
+#
+# Proxy architecture: kamal-proxy → Thruster → Puma
+#   kamal-proxy: SSL termination, HTTP/2, zero-downtime routing (host level)
+#   Thruster:    gzip compression, asset caching, X-Sendfile (container level)
+#   Puma:        Ruby app server (multi-worker, multi-thread)
+#
+# Setup:
+#   1. Edit server IPs, registry, and domain below
+#   2. Configure .kamal/secrets with real credentials
+#   3. Run: kamal setup
+
+service: guild_board
+image: guild_board
+
+servers:
+  web:
+    hosts:
+      - YOUR_SERVER_IP
+  job:
+    hosts:
+      - YOUR_SERVER_IP
+    cmd: bundle exec jobs
+
+registry:
+  server: ghcr.io
+  username:
+    - KAMAL_REGISTRY_USERNAME
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+env:
+  clear:
+    RAILS_ENV: production
+    RAILS_LOG_TO_STDOUT: "true"
+  secret:
+    - RAILS_MASTER_KEY
+    - DATABASE_URL
+
+proxy:
+  host: YOUR_DOMAIN
+  app_port: 3000
+  healthcheck:
+    path: /up
+    interval: 3
+    timeout: 3
+  # SSL: Uncomment for automatic Let's Encrypt (single server)
+  # ssl: true
+  # ssl_redirect: true
+
+# Error pages: kamal-proxy serves these directly from public/
+# Uncomment after verifying custom error pages exist
+# error_pages_path: public
+
+# Asset bridging for zero-downtime deploys
+asset_path: /app/public/assets
+
+# Deployment behavior
+primary_role: web
+readiness_delay: 7
+deploy_timeout: 60
+drain_timeout: 30
+
+# SSH configuration
+ssh:
+  user: deploy
+  # keys:
+  #   - ~/.ssh/id_rsa
+
+# Logging
+logging:
+  driver: json-file
+  options:
+    max-size: 100m
+    max-file: "3"

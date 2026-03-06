@@ -1,0 +1,26 @@
+<div>
+  <% if @label %>
+    <%= @form.label @field_name, @label, class: FormFieldComponent::LABEL_CLASSES %>
+  <% end %>
+
+  <div class="mt-1">
+    <% case @type %>
+    <% when :select %>
+      <%= @form.select @field_name, @options, {}, class: input_css_classes, **@input_options %>
+    <% when :textarea %>
+      <%= @form.text_area @field_name, class: input_css_classes, **@input_options %>
+    <% when :password %>
+      <%= @form.password_field @field_name, class: input_css_classes, required: @required, **@input_options %>
+    <% when :email %>
+      <%= @form.email_field @field_name, class: input_css_classes, required: @required, **@input_options %>
+    <% else %>
+      <%= @form.text_field @field_name, class: input_css_classes, required: @required, **@input_options %>
+    <% end %>
+  </div>
+
+  <% if has_errors? %>
+    <% Array(@error_messages).each do |message| %>
+      <p class="<%= FormFieldComponent::ERROR_CLASSES %>"><%= message %></p>
+    <% end %>
+  <% end %>
+</div>

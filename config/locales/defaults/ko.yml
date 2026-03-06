@@ -1,0 +1,42 @@
+ko:
+  time:
+    formats:
+      default: "%Y년 %m월 %d일 %H:%M"
+      short: "%m/%d %H:%M"
+      long: "%Y년 %m월 %d일 %A %H:%M"
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%m/%d"
+      long: "%Y년 %m월 %d일"
+  defaults:
+    app_name: "Guild Board"
+    welcome: "Rails 8 풀스택 보일러플레이트로 시작하세요."
+    buttons:
+      submit: "제출"
+      save: "저장"
+      cancel: "취소"
+      delete: "삭제"
+      edit: "수정"
+      back: "뒤로"
+      confirm: "확인"
+      close: "닫기"
+    flash:
+      success: "성공적으로 처리되었습니다."
+      error: "오류가 발생했습니다."
+      alert: "알림"
+      notice: "안내"
+    navigation:
+      home: "홈"
+      dashboard: "대시보드"
+      settings: "설정"
+      login: "로그인"
+      logout: "로그아웃"
+      signup: "회원가입"
+    pagination:
+      previous: "이전"
+      next: "다음"
+    errors:
+      not_found: "요청하신 페이지를 찾을 수 없습니다."
+      unauthorized: "로그인이 필요합니다."
+      forbidden: "접근 권한이 없습니다."

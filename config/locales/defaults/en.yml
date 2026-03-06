@@ -1,0 +1,32 @@
+en:
+  defaults:
+    app_name: "Guild Board"
+    welcome: "Get started with your Rails 8 full-stack boilerplate."
+    buttons:
+      submit: "Submit"
+      save: "Save"
+      cancel: "Cancel"
+      delete: "Delete"
+      edit: "Edit"
+      back: "Back"
+      confirm: "Confirm"
+      close: "Close"
+    flash:
+      success: "Completed successfully."
+      error: "An error occurred."
+      alert: "Alert"
+      notice: "Notice"
+    navigation:
+      home: "Home"
+      dashboard: "Dashboard"
+      settings: "Settings"
+      login: "Log in"
+      logout: "Log out"
+      signup: "Sign up"
+    pagination:
+      previous: "Previous"
+      next: "Next"
+    errors:
+      not_found: "The page you requested could not be found."
+      unauthorized: "You need to sign in first."
+      forbidden: "You are not authorized to access this page."

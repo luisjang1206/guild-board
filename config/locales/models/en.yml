@@ -1,0 +1,22 @@
+en:
+  activerecord:
+    models:
+      user: "User"
+    attributes:
+      user:
+        email_address: "Email"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        role: "Role"
+    errors:
+      models:
+        user:
+          attributes:
+            email_address:
+              blank: "can't be blank."
+              taken: "has already been taken."
+              invalid: "is not a valid email."
+            password:
+              too_short: "is too short (minimum is %{count} characters)."
+            password_confirmation:
+              confirmation: "doesn't match password."

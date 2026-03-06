@@ -1,0 +1,9 @@
+<% if @tag == :a %>
+  <%= link_to @href, class: css_classes, **@options.except(:class) do %>
+    <%= content %>
+  <% end %>
+<% else %>
+  <button type="<%= @type %>" class="<%= css_classes %>" <%= "disabled" if @disabled %> <%= tag.attributes(@options.except(:class)) %>>
+    <%= content %>
+  </button>
+<% end %>

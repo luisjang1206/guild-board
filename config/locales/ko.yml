@@ -1,0 +1,21 @@
+ko:
+  registrations:
+    new:
+      title: "회원가입"
+      submit: "가입하기"
+      login_prompt: "이미 계정이 있으신가요?"
+      login_link: "로그인"
+    create:
+      success: "회원가입이 완료되었습니다."
+  sessions:
+    create:
+      invalid: "이메일 또는 비밀번호가 올바르지 않습니다."
+  passwords:
+    create:
+      sent: "비밀번호 재설정 안내가 발송되었습니다."
+    update:
+      success: "비밀번호가 변경되었습니다."
+      mismatch: "비밀번호가 일치하지 않습니다."
+    invalid_token: "비밀번호 재설정 링크가 유효하지 않거나 만료되었습니다."
+  rate_limit:
+    exceeded: "요청이 너무 많습니다. 잠시 후 다시 시도해주세요."
