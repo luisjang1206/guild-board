@@ -1,0 +1,7 @@
+en:
+  mcp:
+    errors:
+      unauthorized: "Invalid or missing API key"
+      rate_limited: "Rate limit exceeded. Please try again later."
+      forbidden: "You don't have permission to perform this action"
+      not_found: "Resource not found"
