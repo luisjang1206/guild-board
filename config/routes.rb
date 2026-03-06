@@ -4,6 +4,14 @@ Rails.application.routes.draw do
     resources :users, only: [ :index, :show ]
   end
   get "/health", to: "health#show"
+  resources :projects do
+    resources :project_keys, only: [ :create, :destroy ] do
+      member do
+        patch :toggle_active
+        post :regenerate
+      end
+    end
+  end
   root "pages#home"
   resource :session
   resource :registration, only: %i[new create]

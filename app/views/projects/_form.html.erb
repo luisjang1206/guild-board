@@ -1,0 +1,27 @@
+<%= form_with(model: project, class: "space-y-6") do |form| %>
+  <%= render FormFieldComponent.new(
+    form: form,
+    field_name: :name,
+    label: t("projects.form.name_label"),
+    required: true,
+    error_messages: project.errors[:name]
+  ) %>
+
+  <%= render FormFieldComponent.new(
+    form: form,
+    field_name: :description,
+    type: :textarea,
+    label: t("projects.form.description_label"),
+    error_messages: project.errors[:description],
+    rows: 4
+  ) %>
+
+  <div class="flex items-center gap-4">
+    <%= render ButtonComponent.new(type: "submit") do %>
+      <%= project.persisted? ? t("projects.form.submit_update") : t("projects.form.submit_create") %>
+    <% end %>
+    <%= render ButtonComponent.new(tag: :a, href: projects_path, variant: :secondary) do %>
+      Cancel
+    <% end %>
+  </div>
+<% end %>

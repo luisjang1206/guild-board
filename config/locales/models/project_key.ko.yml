@@ -1,0 +1,33 @@
+ko:
+  activerecord:
+    models:
+      project_key: API 키
+    attributes:
+      project_key:
+        name: 이름
+        key_prefix: 키 접두사
+        active: 활성
+        permissions: 권한
+        last_used_at: 마지막 사용
+  project_keys:
+    create:
+      created: API 키가 성공적으로 생성되었습니다.
+    destroy:
+      destroyed: API 키가 성공적으로 삭제되었습니다.
+    toggle_active:
+      toggled: API 키 상태가 업데이트되었습니다.
+    regenerate:
+      regenerated: API 키가 성공적으로 재생성되었습니다.
+    component:
+      active: 활성
+      inactive: 비활성
+      never_used: 사용 안 함
+      copy: 복사
+      copied: 복사됨!
+      delete: 삭제
+      toggle: 토글
+      regenerate: 재생성
+      new_key: 새 키
+      new_key_warning: "이 키는 한 번만 표시됩니다. 지금 복사하세요!"
+      key_name_label: 키 이름
+      create_key: 키 생성

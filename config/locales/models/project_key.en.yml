@@ -1,0 +1,33 @@
+en:
+  activerecord:
+    models:
+      project_key: API Key
+    attributes:
+      project_key:
+        name: Name
+        key_prefix: Key Prefix
+        active: Active
+        permissions: Permissions
+        last_used_at: Last Used
+  project_keys:
+    create:
+      created: API key was successfully created.
+    destroy:
+      destroyed: API key was successfully deleted.
+    toggle_active:
+      toggled: API key status was updated.
+    regenerate:
+      regenerated: API key was successfully regenerated.
+    component:
+      active: Active
+      inactive: Inactive
+      never_used: Never
+      copy: Copy
+      copied: Copied!
+      delete: Delete
+      toggle: Toggle
+      regenerate: Regenerate
+      new_key: New Key
+      new_key_warning: "This key will only be shown once. Copy it now!"
+      key_name_label: Key Name
+      create_key: Create Key

@@ -1,0 +1,33 @@
+en:
+  activerecord:
+    models:
+      project: Project
+    attributes:
+      project:
+        name: Name
+        description: Description
+  projects:
+    index:
+      title: Projects
+      new_project: New Project
+      empty: You don't have any projects yet.
+    show:
+      board: Board
+      settings: Settings
+      api_keys: API Keys
+      no_keys: No API keys yet.
+    new:
+      title: New Project
+    edit:
+      title: Edit Project
+    create:
+      created: Project was successfully created.
+    update:
+      updated: Project was successfully updated.
+    destroy:
+      destroyed: Project was successfully deleted.
+    form:
+      name_label: Project Name
+      description_label: Description
+      submit_create: Create Project
+      submit_update: Update Project
