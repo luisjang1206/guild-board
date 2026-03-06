@@ -1,6 +1,4 @@
 class ApplicationComponent < ViewComponent::Base
-  STYLES = %i[modern neo].freeze
-
   private
 
   def safe_classes(*args)
@@ -11,7 +9,7 @@ class ApplicationComponent < ViewComponent::Base
     @style == :neo
   end
 
-  def resolve_variants(variant, modern_variants, neo_variants)
-    neo? ? neo_variants[variant] : modern_variants[variant]
+  def style_for(element)
+    self.class::STYLES.dig(@style, element)
   end
 end
