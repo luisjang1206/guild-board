@@ -16,6 +16,8 @@ en:
       settings: Settings
       api_keys: API Keys
       no_keys: No API keys yet.
+      open_board: Open Board
+      no_tasks_in_column: No tasks
     new:
       title: New Project
     edit:

@@ -7,8 +7,9 @@ class TaskCardComponent < ApplicationComponent
     "low" => :info
   }.freeze
 
-  def initialize(task:)
+  def initialize(task:, link_target: "modal")
     @task = task
+    @link_target = link_target
   end
 
   private

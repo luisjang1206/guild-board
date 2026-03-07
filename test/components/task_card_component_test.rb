@@ -149,4 +149,20 @@ class TaskCardComponentTest < ViewComponent::TestCase
     render_inline(TaskCardComponent.new(task: task))
     assert_selector "[aria-label='Created by agent']"
   end
+
+  # ---------------------------------------------------------------------------
+  # link_target
+  # ---------------------------------------------------------------------------
+
+  test "renders data-turbo-frame='modal' by default" do
+    task = tasks(:active_task)
+    render_inline(TaskCardComponent.new(task: task))
+    assert_selector "a[data-turbo-frame='modal']"
+  end
+
+  test "does not render data-turbo-frame when link_target is nil" do
+    task = tasks(:active_task)
+    render_inline(TaskCardComponent.new(task: task, link_target: nil))
+    assert_no_selector "a[data-turbo-frame]"
+  end
 end

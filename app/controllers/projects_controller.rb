@@ -11,7 +11,9 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     authorize @project
-    @board_columns = @project.board_columns.order(:position)
+    @board_columns = @project.board_columns
+      .includes(tasks: [ :labels, :checklists, :comments ])
+      .order(:position)
     @project_keys = @project.project_keys.order(created_at: :desc)
   end
 

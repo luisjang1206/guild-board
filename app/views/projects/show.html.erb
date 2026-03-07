@@ -15,12 +15,29 @@
 
   <%# Board columns overview %>
   <div class="mb-8">
-    <h2 class="text-lg font-bold uppercase text-black mb-4"><%= t(".board") %></h2>
-    <div class="flex gap-4 overflow-x-auto pb-2">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-bold uppercase text-black"><%= t(".board") %></h2>
+      <%= render ButtonComponent.new(tag: :a, href: project_board_path(@project), variant: :secondary, style: :neo) do %>
+        <%= t(".open_board") %>
+      <% end %>
+    </div>
+    <div class="flex gap-4 overflow-x-auto pb-4">
       <% @board_columns.each do |column| %>
-        <div class="min-w-[200px] border-2 border-black bg-white p-4 shadow-[3px_3px_0px_#000000]">
-          <h3 class="text-sm font-bold uppercase text-black"><%= column.name %></h3>
-          <p class="mt-1 text-xs font-bold text-black"><%= column.tasks.active.count %> tasks</p>
+        <% tasks = column.tasks.reject(&:soft_deleted?) %>
+        <div class="w-72 flex-shrink-0 border-2 border-black bg-white shadow-[4px_4px_0px_#000000]">
+          <div class="border-b-2 border-black px-4 py-3 bg-gray-50 flex items-center justify-between">
+            <h3 class="text-sm font-bold uppercase text-black"><%= column.name %></h3>
+            <span class="border-2 border-black bg-yellow-300 px-2 py-0.5 text-xs font-bold shadow-[2px_2px_0px_#000000]"><%= tasks.size %></span>
+          </div>
+          <div class="max-h-[400px] overflow-y-auto p-3 space-y-3">
+            <% if tasks.empty? %>
+              <p class="text-xs text-gray-400 text-center py-6"><%= t(".no_tasks_in_column") %></p>
+            <% else %>
+              <% tasks.each do |task| %>
+                <%= render TaskCardComponent.new(task: task, link_target: nil) %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>

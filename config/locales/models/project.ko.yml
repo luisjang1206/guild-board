@@ -16,6 +16,8 @@ ko:
       settings: 설정
       api_keys: API 키
       no_keys: 아직 API 키가 없습니다.
+      open_board: 보드 열기
+      no_tasks_in_column: 태스크 없음
     new:
       title: 새 프로젝트
     edit:

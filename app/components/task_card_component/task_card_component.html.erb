@@ -25,7 +25,7 @@
 
     <%# Task title %>
     <%= link_to project_task_path(project, @task),
-          data: { turbo_frame: "modal" },
+          data: (@link_target.present? ? { turbo_frame: @link_target } : {}),
           class: "mb-3 block text-sm font-bold text-black leading-snug hover:underline" do %>
       <%= @task.title %>
     <% end %>
