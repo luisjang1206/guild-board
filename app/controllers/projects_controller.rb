@@ -1,6 +1,11 @@
 class ProjectsController < ApplicationController
   def index
-    @pagy, @projects = pagy(policy_scope(Project).order(created_at: :desc), limit: 12)
+    @pagy, @projects = pagy(
+      policy_scope(Project)
+        .includes(:labels, :tasks, board_columns: { tasks: :comments })
+        .order(created_at: :desc),
+      limit: 12
+    )
   end
 
   def show

@@ -9,20 +9,7 @@
   <% if @projects.any? %>
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <% @projects.each do |project| %>
-        <%= render CardComponent.new(style: :neo) do |card| %>
-          <% card.with_title do %>
-            <%= link_to project.name, project, class: "hover:underline" %>
-          <% end %>
-          <% card.with_body do %>
-            <p class="text-sm text-black line-clamp-2"><%= project.description %></p>
-          <% end %>
-          <% card.with_footer do %>
-            <div class="flex items-center justify-between text-xs font-bold text-black">
-              <span><%= l(project.created_at, format: :short) %></span>
-              <span><%= project.tasks.active.count %> tasks</span>
-            </div>
-          <% end %>
-        <% end %>
+        <%= render ProjectCardComponent.new(project: project) %>
       <% end %>
     </div>
 

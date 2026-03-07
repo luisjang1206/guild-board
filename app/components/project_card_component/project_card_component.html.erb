@@ -1,0 +1,95 @@
+<div class="<%= style_for(:card) %>">
+
+  <%# 상단 섹션: 프로젝트 이름 + 라벨 컬러 dots %>
+  <div class="mb-0 flex items-start justify-between gap-2 pb-3">
+    <%= link_to project_path(@project),
+          class: "#{style_for(:title)} hover:underline leading-tight" do %>
+      <%= @project.name %>
+    <% end %>
+
+    <% if label_colors.any? %>
+      <div class="flex flex-shrink-0 items-center gap-1 pt-0.5" aria-label="Labels">
+        <% label_colors.each do |label| %>
+          <span class="<%= style_for(:label_dot) %>"
+                style="background-color: <%= label[:color] %>;"
+                title="<%= label[:name] %>"></span>
+        <% end %>
+        <% if remaining_labels_count > 0 %>
+          <span class="<%= style_for(:remaining_badge) %>">
+            +<%= remaining_labels_count %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# 중간 섹션: 프로젝트 설명 %>
+  <% if @project.description.present? %>
+    <div class="pb-4">
+      <p class="<%= style_for(:meta) %> line-clamp-2 text-sm normal-case"><%= @project.description %></p>
+    </div>
+  <% end %>
+
+  <%# 통계 섹션: 프로그레스 바 + 컬럼별 태스크 수 %>
+  <div class="<%= style_for(:divider) %> pt-4 pb-4">
+    <%# 프로그레스 바 %>
+    <div class="mb-3 flex items-center gap-2">
+      <div class="<%= style_for(:progress_bar_bg) %> flex-1" role="progressbar"
+           aria-valuenow="<%= completion_percentage %>"
+           aria-valuemin="0"
+           aria-valuemax="100"
+           aria-label="Completion: <%= completion_percentage %>%">
+        <div class="<%= style_for(:progress_bar_fill) %>"
+             style="width: <%= completion_percentage %>%;"></div>
+      </div>
+      <span class="<%= style_for(:stat_value) %> flex-shrink-0 text-xs">
+        <%= completion_percentage %>%
+      </span>
+    </div>
+
+    <%# 컬럼별 미니 배지 %>
+    <% stats = task_stats %>
+    <% if stats[:columns].any? { |c| c[:count] > 0 } %>
+      <div class="flex flex-wrap gap-1" aria-label="Tasks by column">
+        <% stats[:columns].each do |col| %>
+          <% if col[:count] > 0 %>
+            <span class="<%= style_for(:badge) %>">
+              <%= col[:name] %>:<%= col[:count] %>
+            </span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# 하단 섹션: 댓글 수 + 최근 활동 + 생성일 %>
+  <div class="<%= style_for(:divider) %> pt-4 flex items-center justify-between gap-2">
+    <%# 왼쪽: 댓글 수 + 최근 활동 %>
+    <div class="flex items-center gap-3">
+      <% if total_comment_count > 0 %>
+        <div class="flex items-center gap-1 <%= style_for(:stat_label) %>"
+             aria-label="<%= total_comment_count %> comments">
+          <svg class="h-3.5 w-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+          </svg>
+          <span><%= total_comment_count %></span>
+        </div>
+      <% end %>
+
+      <%# 최근 활동 %>
+      <time datetime="<%= latest_activity_time.iso8601 %>"
+            class="<%= style_for(:stat_label) %>"
+            title="<%= l(latest_activity_time, format: :long) %>">
+        <%= time_ago_in_words(latest_activity_time) %>
+      </time>
+    </div>
+
+    <%# 오른쪽: 생성일 %>
+    <time datetime="<%= @project.created_at.iso8601 %>"
+          class="<%= style_for(:stat_label) %>"
+          title="<%= l(@project.created_at, format: :long) %>">
+      <%= l(@project.created_at, format: :short) %>
+    </time>
+  </div>
+
+</div>
