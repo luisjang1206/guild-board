@@ -41,7 +41,7 @@ module McpAuthentication
 
   def extract_header(name)
     rack_key = "HTTP_#{name.upcase.tr('-', '_')}"
-    headers[name] || headers[rack_key] || headers[name.upcase.tr("-", "_")]
+    headers[name] || headers[rack_key] || headers[name.upcase.tr("-", "_")] || headers[name.downcase]
   end
 
   def touch_last_used_at(project_key)
