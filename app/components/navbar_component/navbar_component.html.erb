@@ -2,7 +2,8 @@
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 justify-between">
       <%# Logo / Home link %>
-      <div class="flex shrink-0 items-center">
+      <div class="flex shrink-0 items-center gap-2">
+        <%= image_tag "mascot.png", class: "h-8 w-8 object-contain hover:animate-bounce cursor-pointer", alt: "Mascot" %>
         <%= link_to t("defaults.navigation.home"), root_path, class: "text-lg font-bold text-gray-900" %>
       </div>
 
