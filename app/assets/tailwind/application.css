@@ -1,2 +1,32 @@
 @source "../../components";
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=MedievalSharp&family=VT323&display=swap");
+
+@theme {
+  --color-black: #2e1a12;
+  --color-white: #fdfaf0;
+  --color-gray-50: #f6efe1;
+  --color-gray-100: #e9e0cb;
+  --color-gray-200: #d4c8b0;
+  --color-gray-300: #bfae8e;
+  --color-gray-400: #a39272;
+  --color-gray-500: #857452;
+  --color-gray-600: #68583c;
+  --color-gray-700: #51442c;
+  --color-gray-800: #3b3221;
+  --color-gray-900: #262116;
+  --color-blue-100: #e0f2fe;
+  --color-blue-500: #0ea5e9;
+  --color-brown-900: #2e1a12;
+  --color-yellow-50: #fffce8;
+  --font-sans: "VT323", monospace;
+  --font-mono: "VT323", monospace;
+  --font-serif: "MedievalSharp", cursive;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    letter-spacing: 0.05em;
+  }
+}

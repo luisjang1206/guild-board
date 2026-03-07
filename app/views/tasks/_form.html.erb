@@ -1,6 +1,6 @@
 <%= form_with(model: [project, task], class: "space-y-4") do |form| %>
   <% if task.errors.any? %>
-    <div class="border-2 border-black bg-red-100 p-3 shadow-[3px_3px_0px_#000000]" role="alert">
+    <div class="border-2 border-black bg-red-100 p-3 shadow-[3px_3px_0px_var(--color-black)]" role="alert">
       <% task.errors.full_messages.each do |message| %>
         <p class="text-sm font-bold text-red-700"><%= message %></p>
       <% end %>
@@ -14,7 +14,7 @@
     </label>
     <%= form.text_field :title,
         required: true,
-        class: "w-full border-2 border-black px-3 py-2 text-sm shadow-[3px_3px_0px_#000000] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000]",
+        class: "w-full border-2 border-black px-3 py-2 text-sm shadow-[3px_3px_0px_var(--color-black)] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_var(--color-black)]",
         placeholder: t("tasks.form.title_placeholder") %>
   </div>
 
@@ -25,7 +25,7 @@
     </label>
     <%= form.text_area :description,
         rows: 3,
-        class: "w-full resize-none border-2 border-black px-3 py-2 text-sm shadow-[3px_3px_0px_#000000] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000]",
+        class: "w-full resize-none border-2 border-black px-3 py-2 text-sm shadow-[3px_3px_0px_var(--color-black)] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_var(--color-black)]",
         placeholder: t("tasks.form.description_placeholder") %>
   </div>
 
@@ -37,7 +37,7 @@
     <%= form.select :priority,
         options_for_select([[t("tasks.form.priority_low"), "low"], [t("tasks.form.priority_medium"), "medium"], [t("tasks.form.priority_high"), "high"]], task.priority || "low"),
         {},
-        class: "w-full border-2 border-black bg-white px-3 py-2 text-sm shadow-[3px_3px_0px_#000000] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000]" %>
+        class: "w-full border-2 border-black bg-white px-3 py-2 text-sm shadow-[3px_3px_0px_var(--color-black)] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_var(--color-black)]" %>
   </div>
 
   <%# Column %>
@@ -48,17 +48,17 @@
     <%= form.select :board_column_id,
         options_for_select(board_columns.map { |c| [c.name, c.id] }, task.board_column_id || params[:board_column_id]),
         {},
-        class: "w-full border-2 border-black bg-white px-3 py-2 text-sm shadow-[3px_3px_0px_#000000] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000]" %>
+        class: "w-full border-2 border-black bg-white px-3 py-2 text-sm shadow-[3px_3px_0px_var(--color-black)] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_var(--color-black)]" %>
   </div>
 
   <%# Submit %>
   <div class="flex justify-end gap-3 pt-2">
     <button type="button"
             data-action="click->frame-modal#close"
-            class="border-2 border-black bg-white px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]">
+            class="border-2 border-black bg-white px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_var(--color-black)]">
       <%= t("defaults.buttons.cancel") %>
     </button>
     <%= form.submit(task.persisted? ? t("tasks.form.submit_update") : t("tasks.form.submit_create"),
-        class: "cursor-pointer border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]") %>
+        class: "cursor-pointer border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_var(--color-black)]") %>
   </div>
 <% end %>

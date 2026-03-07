@@ -8,7 +8,7 @@ class EmptyStateComponent < ApplicationComponent
       message: "text-sm text-gray-500"
     },
     neo: {
-      wrapper: "border-2 border-black border-dashed bg-white py-12 text-center shadow-[4px_4px_0px_#000000]",
+      wrapper: "border-2 border-black border-dashed bg-white py-12 text-center shadow-[4px_4px_0px_var(--color-black)]",
       icon: "mx-auto mb-4 text-black",
       message: "text-sm font-bold uppercase text-black"
     }

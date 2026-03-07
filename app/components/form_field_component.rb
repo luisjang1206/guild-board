@@ -9,7 +9,7 @@ class FormFieldComponent < ApplicationComponent
       error: "mt-1 text-sm text-red-600"
     },
     neo: {
-      input: "block w-full border-2 border-black py-1.5 text-black shadow-[3px_3px_0px_#000000] placeholder:text-gray-500 focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000] focus:outline-none sm:text-sm",
+      input: "block w-full border-2 border-black py-1.5 text-black shadow-[3px_3px_0px_var(--color-black)] placeholder:text-gray-500 focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_var(--color-black)] focus:outline-none sm:text-sm",
       input_error: "block w-full border-2 border-red-600 py-1.5 text-black shadow-[3px_3px_0px_#FF0000] placeholder:text-gray-500 focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#FF0000] focus:outline-none sm:text-sm",
       label: "block text-sm font-bold uppercase leading-6 text-black",
       error: "mt-1 text-sm font-bold text-red-600"

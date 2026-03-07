@@ -26,7 +26,7 @@
           <%= render "labels/label", label: label, project: @project %>
         <% end %>
         <% if @labels.empty? %>
-          <div class="border-2 border-black bg-gray-50 p-6 text-center shadow-[3px_3px_0px_#000000]">
+          <div class="border-2 border-black bg-gray-50 p-6 text-center shadow-[3px_3px_0px_var(--color-black)]">
             <p class="text-sm font-bold uppercase text-gray-400"><%= t("labels.index.no_labels") %></p>
           </div>
         <% end %>
@@ -36,10 +36,10 @@
     <%# New label form %>
     <div>
       <h2 class="mb-3 text-sm font-bold uppercase text-gray-500"><%= t("labels.index.new_label") %></h2>
-      <div class="border-2 border-black bg-white p-5 shadow-[4px_4px_0px_#000000]">
+      <div class="border-2 border-black bg-white p-5 shadow-[4px_4px_0px_var(--color-black)]">
         <%= form_with model: [@project, @label], class: "space-y-4" do |form| %>
           <% if @label.errors.any? %>
-            <div class="border-2 border-black bg-red-100 p-3 shadow-[3px_3px_0px_#000000]" role="alert">
+            <div class="border-2 border-black bg-red-100 p-3 shadow-[3px_3px_0px_var(--color-black)]" role="alert">
               <% @label.errors.full_messages.each do |msg| %>
                 <p class="text-sm font-bold text-red-700"><%= msg %></p>
               <% end %>
@@ -53,7 +53,7 @@
             <%= form.text_field :name,
                 required: true,
                 placeholder: t("labels.form.name_placeholder"),
-                class: "w-full border-2 border-black px-3 py-2 text-sm shadow-[3px_3px_0px_#000000] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_#000000]" %>
+                class: "w-full border-2 border-black px-3 py-2 text-sm shadow-[3px_3px_0px_var(--color-black)] outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-[5px_5px_0px_var(--color-black)]" %>
           </div>
 
           <div>
@@ -63,14 +63,14 @@
             <div class="flex items-center gap-3">
               <%= form.color_field :color,
                   value: @label.color.presence || "#FFDD00",
-                  class: "h-10 w-16 cursor-pointer border-2 border-black shadow-[3px_3px_0px_#000000] outline-none p-0.5" %>
+                  class: "h-10 w-16 cursor-pointer border-2 border-black shadow-[3px_3px_0px_var(--color-black)] outline-none p-0.5" %>
               <span class="text-xs text-gray-500"><%= t("labels.form.color_hint") %></span>
             </div>
           </div>
 
           <div class="flex justify-end pt-2">
             <%= form.submit t("labels.form.submit_create"),
-                class: "cursor-pointer border-2 border-black bg-yellow-300 px-5 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]" %>
+                class: "cursor-pointer border-2 border-black bg-yellow-300 px-5 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_var(--color-black)]" %>
           </div>
         <% end %>
       </div>

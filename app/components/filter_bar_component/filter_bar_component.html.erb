@@ -12,7 +12,7 @@
       <select id="filter-priority"
               data-filter-target="priority"
               data-action="change->filter#filter"
-              class="border-2 border-black bg-white px-3 py-1.5 text-xs font-bold uppercase shadow-[3px_3px_0px_#000000] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 cursor-pointer">
+              class="border-2 border-black bg-white px-3 py-1.5 text-xs font-bold uppercase shadow-[3px_3px_0px_var(--color-black)] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 cursor-pointer">
         <option value=""><%= t("filter_bar.all_priorities") %></option>
         <option value="low" <%= "selected" if @filters[:priority] == "low" %>><%= t("filter_bar.priority_low") %></option>
         <option value="medium" <%= "selected" if @filters[:priority] == "medium" %>><%= t("filter_bar.priority_medium") %></option>
@@ -28,7 +28,7 @@
       <select id="filter-label"
               data-filter-target="label"
               data-action="change->filter#filter"
-              class="border-2 border-black bg-white px-3 py-1.5 text-xs font-bold uppercase shadow-[3px_3px_0px_#000000] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 cursor-pointer">
+              class="border-2 border-black bg-white px-3 py-1.5 text-xs font-bold uppercase shadow-[3px_3px_0px_var(--color-black)] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 cursor-pointer">
         <option value=""><%= t("filter_bar.all_labels") %></option>
         <% @labels.each do |label| %>
           <option value="<%= label.id %>" <%= "selected" if @filters[:label_id].to_s == label.id.to_s %>>
@@ -46,7 +46,7 @@
       <select id="filter-creator-type"
               data-filter-target="creatorType"
               data-action="change->filter#filter"
-              class="border-2 border-black bg-white px-3 py-1.5 text-xs font-bold uppercase shadow-[3px_3px_0px_#000000] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 cursor-pointer">
+              class="border-2 border-black bg-white px-3 py-1.5 text-xs font-bold uppercase shadow-[3px_3px_0px_var(--color-black)] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 cursor-pointer">
         <option value=""><%= t("filter_bar.all_creators") %></option>
         <option value="user" <%= "selected" if @filters[:creator_type] == "user" %>><%= t("filter_bar.creator_user") %></option>
         <option value="agent" <%= "selected" if @filters[:creator_type] == "agent" %>><%= t("filter_bar.creator_agent") %></option>
@@ -56,12 +56,12 @@
     <% if @filters.any? %>
       <%# Active filter indicators %>
       <div class="flex items-center gap-2 ml-2">
-        <span class="border-2 border-black bg-yellow-300 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]">
+        <span class="border-2 border-black bg-yellow-300 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]">
           <%= t("filter_bar.filtered") %>
         </span>
         <button type="button"
                 data-action="click->filter#clearAll"
-                class="border-2 border-black bg-white px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]">
+                class="border-2 border-black bg-white px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_var(--color-black)]">
           <%= t("filter_bar.clear") %>
         </button>
       </div>

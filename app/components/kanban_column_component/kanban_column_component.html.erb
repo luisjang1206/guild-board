@@ -3,7 +3,7 @@
      data-column-id="<%= @board_column.id %>"
      data-column-draggable>
   <%# Column header %>
-  <div class="mb-3 flex items-center justify-between border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0px_#000000]"
+  <div class="mb-3 flex items-center justify-between border-2 border-black bg-white px-4 py-3 shadow-[4px_4px_0px_var(--color-black)]"
        data-controller="column-edit"
        data-column-edit-url-value="<%= project_board_column_path(project, @board_column) %>">
     <%# Display mode: click to edit %>
@@ -22,17 +22,17 @@
          data-action="keydown->column-edit#keydown">
       <input type="text"
              value="<%= @board_column.name %>"
-             class="w-full border-2 border-black px-2 py-0.5 text-sm font-bold uppercase shadow-[3px_3px_0px_#000000] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1"
+             class="w-full border-2 border-black px-2 py-0.5 text-sm font-bold uppercase shadow-[3px_3px_0px_var(--color-black)] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1"
              aria-label="<%= t("board_column.edit_name") %>">
     </div>
 
     <div class="flex items-center gap-2 flex-shrink-0">
-      <span class="border-2 border-black bg-yellow-300 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]">
+      <span class="border-2 border-black bg-yellow-300 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]">
         <%= task_count %>
       </span>
       <%= link_to new_project_task_path(project, board_column_id: @board_column.id),
             data: { turbo_frame: "modal" },
-            class: "border-2 border-black bg-white px-2 py-0.5 text-sm font-bold leading-none shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]",
+            class: "border-2 border-black bg-white px-2 py-0.5 text-sm font-bold leading-none shadow-[2px_2px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_var(--color-black)]",
             aria: { label: t("board_column.add_task", name: @board_column.name) } do %>
         +
       <% end %>
@@ -44,7 +44,7 @@
               turbo_confirm: t("board_column.confirm_delete", name: @board_column.name),
               turbo_stream: true
             },
-            class: "border-2 border-black bg-white px-2 py-0.5 text-xs font-bold leading-none shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-red-50 hover:shadow-[4px_4px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_#000000]",
+            class: "border-2 border-black bg-white px-2 py-0.5 text-xs font-bold leading-none shadow-[2px_2px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-red-50 hover:shadow-[4px_4px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0px_var(--color-black)]",
             aria: { label: t("board_column.delete", name: @board_column.name) },
             form: { class: "inline" } do %>
         <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true">

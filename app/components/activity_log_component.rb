@@ -13,8 +13,8 @@ class ActivityLogComponent < ApplicationComponent
     },
     neo: {
       wrapper: "flex items-start gap-3 border-b-2 border-black py-3 last:border-b-0",
-      icon_user: "flex-shrink-0 h-8 w-8 border-2 border-black bg-blue-200 flex items-center justify-center shadow-[2px_2px_0px_#000000]",
-      icon_agent: "flex-shrink-0 h-8 w-8 border-2 border-black bg-purple-200 flex items-center justify-center shadow-[2px_2px_0px_#000000]",
+      icon_user: "flex-shrink-0 h-8 w-8 border-2 border-black bg-blue-200 flex items-center justify-center shadow-[2px_2px_0px_var(--color-black)]",
+      icon_agent: "flex-shrink-0 h-8 w-8 border-2 border-black bg-purple-200 flex items-center justify-center shadow-[2px_2px_0px_var(--color-black)]",
       content: "flex-1 min-w-0",
       action_text: "text-sm font-bold text-black",
       metadata: "mt-1 text-xs text-gray-600",

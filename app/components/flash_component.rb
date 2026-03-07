@@ -11,9 +11,9 @@ class FlashComponent < ApplicationComponent
       dismiss_button: "ml-4 inline-flex shrink-0 rounded-md p-1.5 hover:bg-black/5 focus:outline-none"
     },
     neo: {
-      notice: "border-2 border-black bg-green-200 p-4 text-black shadow-[4px_4px_0px_#000000]",
-      alert: "border-2 border-black bg-yellow-200 p-4 text-black shadow-[4px_4px_0px_#000000]",
-      error: "border-2 border-black bg-red-200 p-4 text-black shadow-[4px_4px_0px_#000000]",
+      notice: "border-2 border-black bg-green-200 p-4 text-black shadow-[4px_4px_0px_var(--color-black)]",
+      alert: "border-2 border-black bg-yellow-200 p-4 text-black shadow-[4px_4px_0px_var(--color-black)]",
+      error: "border-2 border-black bg-red-200 p-4 text-black shadow-[4px_4px_0px_var(--color-black)]",
       wrapper: "",
       message: "text-sm font-bold uppercase",
       dismiss_button: "ml-4 inline-flex shrink-0 border-2 border-black p-1 hover:bg-black/10 focus:outline-none"

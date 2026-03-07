@@ -16,13 +16,13 @@ class ProjectCardComponent < ApplicationComponent
       stat_value: "text-sm font-medium text-gray-900"
     },
     neo: {
-      card: "border-2 border-black bg-white p-6 shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000]",
+      card: "border-2 border-black bg-white p-6 shadow-[4px_4px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-black)]",
       title: "text-lg font-bold uppercase text-black truncate",
       meta: "text-xs font-bold text-black",
       divider: "border-t-2 border-black",
       label_dot: "h-3 w-3 rounded-full border-2 border-black flex-shrink-0",
-      badge: "border-2 border-black bg-white px-1.5 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
-      remaining_badge: "border-2 border-black bg-white px-1 text-[10px] font-bold uppercase shadow-[2px_2px_0px_#000000]",
+      badge: "border-2 border-black bg-white px-1.5 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]",
+      remaining_badge: "border-2 border-black bg-white px-1 text-[10px] font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]",
       progress_bar_bg: "h-2 w-full border border-black bg-white",
       progress_bar_fill: "h-2 bg-black transition-all",
       stat_label: "text-xs font-bold uppercase text-black",

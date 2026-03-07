@@ -9,10 +9,10 @@ class BadgeComponent < ApplicationComponent
       info: "inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20"
     },
     neo: {
-      success: "inline-flex items-center border-2 border-black bg-green-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
-      warning: "inline-flex items-center border-2 border-black bg-yellow-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
-      error: "inline-flex items-center border-2 border-black bg-red-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
-      info: "inline-flex items-center border-2 border-black bg-blue-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]"
+      success: "inline-flex items-center border-2 border-black bg-green-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]",
+      warning: "inline-flex items-center border-2 border-black bg-yellow-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]",
+      error: "inline-flex items-center border-2 border-black bg-red-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]",
+      info: "inline-flex items-center border-2 border-black bg-blue-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]"
     }
   }.freeze
 

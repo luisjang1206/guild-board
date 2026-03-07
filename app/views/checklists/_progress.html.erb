@@ -5,11 +5,11 @@
 %>
 <div class="mb-2 flex items-center gap-2">
   <h3 class="text-xs font-bold uppercase text-gray-500"><%= t("checklists.progress.title") %></h3>
-  <span class="border-2 border-black bg-yellow-300 px-1.5 py-0.5 text-xs font-bold shadow-[2px_2px_0px_#000000]">
+  <span class="border-2 border-black bg-yellow-300 px-1.5 py-0.5 text-xs font-bold shadow-[2px_2px_0px_var(--color-black)]">
     <%= completed %>/<%= total %>
   </span>
 </div>
-<div class="mb-3 h-2 w-full border-2 border-black bg-white shadow-[2px_2px_0px_#000000]">
+<div class="mb-3 h-2 w-full border-2 border-black bg-white shadow-[2px_2px_0px_var(--color-black)]">
   <div class="h-full bg-yellow-300 transition-all"
        style="width: <%= pct %>%;"
        role="progressbar"

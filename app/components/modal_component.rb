@@ -9,8 +9,8 @@ class ModalComponent < ApplicationComponent
     },
     neo: {
       backdrop: "hidden fixed inset-0 z-50 flex min-h-full items-center justify-center overflow-y-auto bg-black/50 p-4",
-      panel: "relative w-full max-w-lg border-2 border-black bg-white p-6 shadow-[8px_8px_0px_#000000]",
-      close_button: "border-2 border-black bg-white p-1 text-black shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000000]"
+      panel: "relative w-full max-w-lg border-2 border-black bg-white p-6 shadow-[8px_8px_0px_var(--color-black)]",
+      close_button: "border-2 border-black bg-white p-1 text-black shadow-[2px_2px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--color-black)]"
     }
   }.freeze
 

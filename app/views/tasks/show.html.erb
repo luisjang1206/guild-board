@@ -8,7 +8,7 @@
          aria-modal="true"
          role="dialog"
          aria-labelledby="modal-title-show">
-      <div class="relative w-full max-w-xl border-2 border-black bg-white shadow-[8px_8px_0px_#000000]">
+      <div class="relative w-full max-w-xl border-2 border-black bg-white shadow-[8px_8px_0px_var(--color-black)]">
 
         <%# Header %>
         <div class="flex items-start justify-between border-b-2 border-black px-6 py-4">
@@ -38,9 +38,9 @@
             <span class="text-xs font-bold uppercase text-gray-500"><%= t("tasks.show.priority") %></span>
             <%
               priority_styles = {
-                "high"   => "border-2 border-black bg-red-100 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
-                "medium" => "border-2 border-black bg-yellow-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]",
-                "low"    => "border-2 border-black bg-blue-100 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000]"
+                "high"   => "border-2 border-black bg-red-100 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]",
+                "medium" => "border-2 border-black bg-yellow-200 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]",
+                "low"    => "border-2 border-black bg-blue-100 px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)]"
               }
             %>
             <span class="<%= priority_styles[@task.priority] || priority_styles['low'] %>">
@@ -52,7 +52,7 @@
           <% if @task.description.present? %>
             <div>
               <h3 class="mb-2 text-xs font-bold uppercase text-gray-500"><%= t("tasks.show.description") %></h3>
-              <div class="border-2 border-black bg-gray-50 p-3 shadow-[3px_3px_0px_#000000]">
+              <div class="border-2 border-black bg-gray-50 p-3 shadow-[3px_3px_0px_var(--color-black)]">
                 <p class="whitespace-pre-wrap text-sm text-black"><%= @task.description %></p>
               </div>
             </div>
@@ -68,7 +68,7 @@
                   data: { turbo_stream: true } do |form| %>
                 <div class="flex flex-wrap gap-2">
                   <% project_labels.each do |label| %>
-                    <label class="flex cursor-pointer items-center gap-1.5 border-2 border-black px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000000] <%= @task.label_ids.include?(label.id) ? 'bg-yellow-200' : 'bg-white' %>">
+                    <label class="flex cursor-pointer items-center gap-1.5 border-2 border-black px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_var(--color-black)] <%= @task.label_ids.include?(label.id) ? 'bg-yellow-200' : 'bg-white' %>">
                       <%= check_box_tag "task[label_ids][]",
                           label.id,
                           @task.label_ids.include?(label.id),
@@ -113,7 +113,7 @@
                 <%= render "comments/comment", comment: comment %>
               <% end %>
               <% if @task.comments.empty? %>
-                <li id="comments-empty" class="border-2 border-black bg-gray-50 p-4 text-center shadow-[2px_2px_0px_#000000]">
+                <li id="comments-empty" class="border-2 border-black bg-gray-50 p-4 text-center shadow-[2px_2px_0px_var(--color-black)]">
                   <p class="text-xs font-bold uppercase text-gray-400"><%= t("tasks.show.no_comments") %></p>
                 </li>
               <% end %>
@@ -123,7 +123,7 @@
 
           <%# Empty state if no body content at all %>
           <% if !@task.description.present? && @project.labels.empty? && @task.checklists.empty? && @task.comments.empty? %>
-            <div class="border-2 border-black bg-gray-50 p-6 text-center shadow-[3px_3px_0px_#000000]">
+            <div class="border-2 border-black bg-gray-50 p-6 text-center shadow-[3px_3px_0px_var(--color-black)]">
               <p class="text-sm font-bold uppercase text-gray-400"><%= t("tasks.show.no_details") %></p>
             </div>
           <% end %>
@@ -136,7 +136,7 @@
                 <%= render(ActivityLogComponent.new(activity_log: activity_log, style: :neo)) %>
               <% end %>
               <% if @task.activity_logs.empty? %>
-                <div class="border-2 border-black bg-gray-50 p-4 text-center shadow-[2px_2px_0px_#000000]">
+                <div class="border-2 border-black bg-gray-50 p-4 text-center shadow-[2px_2px_0px_var(--color-black)]">
                   <p class="text-xs font-bold uppercase text-gray-400"><%= t("activity_log.empty") %></p>
                 </div>
               <% end %>
@@ -151,7 +151,7 @@
             <%= button_to project_task_path(@project, @task),
                 method: :delete,
                 data: { turbo_confirm: t("tasks.confirm_delete") },
-                class: "border-2 border-black bg-red-100 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000] cursor-pointer" do %>
+                class: "border-2 border-black bg-red-100 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_var(--color-black)] cursor-pointer" do %>
               <%= t("defaults.buttons.delete") %>
             <% end %>
           </div>
@@ -159,13 +159,13 @@
           <div class="flex items-center gap-3">
             <button type="button"
                     data-action="click->frame-modal#close"
-                    class="border-2 border-black bg-white px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]">
+                    class="border-2 border-black bg-white px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_var(--color-black)]">
               <%= t("defaults.buttons.close") %>
             </button>
             <%= link_to t("tasks.edit.title"),
                 edit_project_task_path(@project, @task),
                 data: { turbo_frame: "modal" },
-                class: "border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_#000000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_#000000]" %>
+                class: "border-2 border-black bg-yellow-300 px-4 py-2 text-sm font-bold uppercase shadow-[4px_4px_0px_var(--color-black)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-black)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0px_var(--color-black)]" %>
           </div>
         </div>
 

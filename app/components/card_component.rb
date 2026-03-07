@@ -9,7 +9,7 @@ class CardComponent < ApplicationComponent
       footer: "mt-4 border-t border-gray-100 pt-4"
     },
     neo: {
-      card: { default: "border-2 border-black bg-white p-6 shadow-[4px_4px_0px_#000000]", bordered: "border-2 border-black bg-white p-6 shadow-[4px_4px_0px_#000000]" },
+      card: { default: "border-2 border-black bg-white p-6 shadow-[4px_4px_0px_var(--color-black)]", bordered: "border-2 border-black bg-white p-6 shadow-[4px_4px_0px_var(--color-black)]" },
       title: "mb-4 text-lg font-bold uppercase text-black",
       body: "text-black",
       footer: "mt-4 border-t-2 border-black pt-4"
