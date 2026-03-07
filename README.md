@@ -134,7 +134,7 @@ bin/dev
 
 | Process | Description |
 |---|---|
-| `web` | Rails application server (port 3000) |
+| `web` | Rails application server (port 3100) |
 | `css` | Tailwind CSS v4 watcher |
 | `jobs` | SolidQueue worker |
 
@@ -176,7 +176,7 @@ Guild Board exposes an MCP (Model Context Protocol) server that lets AI coding a
 ```
 AI Agent (Claude, Cursor, etc.)
   └── MCP client
-        └── POST /mcp  (with X-Project-Key header)
+        └── SSE /mcp/sse  (with X-Project-Key header)
               └── Guild Board MCP server
                     └── Tool execution (create_task, move_task, ...)
                           └── Board updates broadcast to all viewers via Action Cable
@@ -191,15 +191,23 @@ AI Agent (Claude, Cursor, etc.)
 
 ### Connecting an AI Agent
 
-Configure your MCP client with the following settings:
+Configure your MCP client with the following settings. The MCP server supports both **SSE** and **Streamable HTTP** transports:
+
+| Transport | Endpoint | MCP Protocol Version |
+|---|---|---|
+| SSE | `/mcp/sse` | 2024-11-05 |
+| Streamable HTTP | `/mcp/messages` | 2025-03-26 |
+
+**Production:**
 
 ```json
 {
   "mcpServers": {
     "guild-board": {
-      "url": "https://your-domain.com/mcp",
+      "type": "sse",
+      "url": "https://your-domain.com/mcp/sse",
       "headers": {
-        "X-Project-Key": "gbk_your_raw_project_key_here",
+        "X-Project-Key": "guild_your_raw_project_key_here",
         "X-Agent-Name": "claude-code"
       }
     }
@@ -207,21 +215,24 @@ Configure your MCP client with the following settings:
 }
 ```
 
-For local development (the MCP server is `localhost_only` in non-production environments):
+**Local development** (the MCP server is `localhost_only` in non-production environments):
 
 ```json
 {
   "mcpServers": {
     "guild-board": {
-      "url": "http://localhost:3000/mcp",
+      "type": "sse",
+      "url": "http://localhost:3100/mcp/sse",
       "headers": {
-        "X-Project-Key": "gbk_your_raw_project_key_here",
+        "X-Project-Key": "guild_your_raw_project_key_here",
         "X-Agent-Name": "claude-code"
       }
     }
   }
 }
 ```
+
+> Claude Code uses `type: "sse"`. Other MCP clients may use `streamable-http` with the `/mcp/messages` endpoint — check your client's documentation.
 
 ### Available MCP Tools
 
