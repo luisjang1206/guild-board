@@ -69,11 +69,26 @@ class Task < ApplicationRecord
     end
   end
 
+  def broadcast_column_move
+    broadcast_remove_to(
+      [ project, :board ],
+      target: dom_id(self)
+    )
+    broadcast_append_to(
+      [ project, :board ],
+      target: "board_column_#{board_column_id}_tasks",
+      partial: "tasks/task_card",
+      locals: { task: self }
+    )
+  end
+
   private
 
   def handle_update_broadcast
     if saved_change_to_deleted_at? && deleted_at.present?
       broadcast_remove_to [ project, :board ], target: dom_id(self)
+    elsif saved_change_to_board_column_id?
+      broadcast_column_move
     else
       broadcast_replace_later_to(
         [ project, :board ],

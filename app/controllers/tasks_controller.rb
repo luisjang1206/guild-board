@@ -61,16 +61,7 @@ class TasksController < ApplicationController
 
     log_activity(action: "task_moved", task: @task, metadata: { board_column: [ old_column_name, new_column_name ] })
 
-    Turbo::StreamsChannel.broadcast_remove_to(
-      [ @project, :board ],
-      target: ActionView::RecordIdentifier.dom_id(@task)
-    )
-    Turbo::StreamsChannel.broadcast_append_to(
-      [ @project, :board ],
-      target: "board_column_#{@task.board_column_id}_tasks",
-      partial: "tasks/task_card",
-      locals: { task: @task }
-    )
+    @task.broadcast_column_move
 
     head :ok
   rescue ActiveRecord::RecordInvalid => e

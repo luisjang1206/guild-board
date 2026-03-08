@@ -19,6 +19,8 @@ class MoveTaskTool < ApplicationTool
     old_column_name = task.board_column.name
     new_position = position || target_column.tasks.active.count
     task.move_to_column(target_column.id, new_position)
+    task.reload
+    task.broadcast_column_move
 
     ActivityLogJob.perform_later(
       project_id: Current.project.id,
