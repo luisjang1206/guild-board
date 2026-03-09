@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class UpdateTaskTool < ApplicationTool
-  description "태스크 정보를 수정합니다"
+  description "태스크의 제목, 설명, 우선순위를 수정합니다. " \
+              "칼럼 이동은 이 도구로 할 수 없으며, move_task 도구를 사용하세요."
 
   arguments do
     required(:task_id).filled(:integer).description("태스크 ID")

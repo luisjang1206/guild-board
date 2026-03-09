@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class UpdateChecklistTool < ApplicationTool
-  description "체크리스트 항목의 완료 상태를 변경합니다"
+  description "체크리스트 항목의 완료 상태를 변경합니다. " \
+              "이 도구는 태스크의 칼럼 위치를 변경하지 않습니다. " \
+              "모든 체크리스트를 완료한 후에는 move_task 도구로 태스크를 'Done' 칼럼으로 이동하세요."
 
   arguments do
     required(:checklist_id).filled(:integer).description("체크리스트 ID")

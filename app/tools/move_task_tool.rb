@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class MoveTaskTool < ApplicationTool
-  description "태스크를 다른 칼럼으로 이동합니다"
+  description "태스크를 다른 칼럼으로 이동합니다. " \
+              "칼럼이 태스크의 상태를 나타냅니다 (Backlog → Todo → In Progress → Review → Done). " \
+              "태스크 완료 시 반드시 이 도구로 'Done' 칼럼으로 이동해야 보드에 반영됩니다."
 
   arguments do
     required(:task_id).filled(:integer).description("태스크 ID")
