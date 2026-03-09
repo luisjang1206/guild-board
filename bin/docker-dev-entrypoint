@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+# Development entrypoint for Docker Compose
+# Ensures gems are installed and databases are prepared
+
+# Install/update gems if Gemfile has changed since last build
+bundle check || bundle install
+
+# Only the web service prepares databases (avoids race conditions)
+if [ "${DOCKER_SERVICE}" = "web" ]; then
+  echo "==> Removing stale PID file..."
+  rm -f tmp/pids/server.pid
+
+  echo "==> Preparing databases..."
+  bin/rails db:prepare
+fi
+
+exec "${@}"

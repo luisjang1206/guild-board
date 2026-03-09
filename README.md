@@ -14,7 +14,7 @@ via the MCP server. Humans see every change in real time via Action Cable.
 
 - [A. Technology Stack](#a-technology-stack)
 - [B. Key Features](#b-key-features)
-- [C. Local Development Setup](#c-local-development-setup)
+- [C. Development Setup](#c-development-setup)
 - [D. MCP — AI Agent Integration](#d-mcp--ai-agent-integration)
 - [E. Testing](#e-testing)
 - [F. Deployment (Kamal 2)](#f-deployment-kamal-2)
@@ -109,19 +109,66 @@ No Redis required. The Solid Stack handles caching, jobs, and WebSockets entirel
 
 ---
 
-## C. Local Development Setup
+## C. Development Setup
 
-### Prerequisites
+### Option 1: Docker Compose (Recommended)
 
+Everything runs in Docker — no local Ruby installation required.
+
+**Prerequisites:**
+- Docker
+- Docker Compose
+
+**Setup:**
+
+```bash
+# Start all services (db + web + css + jobs)
+docker compose up
+
+# Or run in background
+docker compose up -d
+```
+
+The entrypoint script automatically handles gem installation and database setup. Your application will be available at `http://localhost:3100`.
+
+**Services:**
+
+| Service | Description | Port |
+|---|---|---|
+| `db` | PostgreSQL 17 | 5435 |
+| `web` | Rails application server | 3100 |
+| `css` | Tailwind CSS v4 watcher | — |
+| `jobs` | SolidQueue worker | — |
+
+**Common Commands:**
+
+```bash
+docker compose up              # Start all services
+docker compose up -d           # Start in background
+docker compose logs -f web     # Follow web server logs
+docker compose exec web bin/rails console  # Rails console
+docker compose exec web bin/rails test     # Run tests
+docker compose down            # Stop all services
+```
+
+**Debugging:**
+
+Port 12345 is exposed for the Ruby debugger. Source code is bind-mounted (`.:/rails`), so local changes are reflected immediately in the running container.
+
+### Option 2: Local (DB Only in Docker)
+
+Run Rails natively on your machine with PostgreSQL in Docker.
+
+**Prerequisites:**
 - Ruby 3.4 or later (rbenv, asdf, or mise)
-- Docker (for PostgreSQL 17 only — Rails runs natively)
+- Docker (for PostgreSQL 17 only)
 - Bundler 2.x
 
-### Setup
+**Setup:**
 
 ```bash
 # Step 1: Start PostgreSQL 17 via Docker
-docker-compose up db -d
+docker compose up db -d
 
 # Step 2: Install dependencies, create databases, run migrations, seed data
 bin/setup

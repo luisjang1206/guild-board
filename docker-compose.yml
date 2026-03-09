@@ -1,6 +1,28 @@
-# Docker Compose — Local Development (DB Only)
-# Usage: docker-compose up db
-# PRD 3.4: PostgreSQL만 Docker, Rails 앱은 bin/dev로 로컬 실행
+# Docker Compose — Full Development Environment
+# Usage:
+#   docker compose up              # Start all services (db + web + css + jobs)
+#   docker compose up db           # Start only PostgreSQL (for local Rails dev with bin/dev)
+#   docker compose logs -f web     # Follow web server logs
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile.dev
+  volumes:
+    - .:/rails
+    - bundle_cache:/usr/local/bundle
+    - /rails/tmp/pids
+  environment: &app_env
+    DB_HOST: db
+    DB_USER: postgres
+    DB_PASSWORD: password
+    DB_PORT: "5432"
+    RAILS_ENV: development
+  depends_on:
+    db:
+      condition: service_healthy
+  tmpfs:
+    - /rails/tmp/cache
 
 services:
   db:
@@ -11,7 +33,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "5435:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -20,5 +42,54 @@ services:
       timeout: 5s
       retries: 5
 
+  web:
+    <<: *app
+    container_name: guild_board_web
+    environment:
+      <<: *app_env
+      DOCKER_SERVICE: web
+      PORT: "3100"
+      RUBY_DEBUG_OPEN: "true"
+      RUBY_DEBUG_LAZY: "true"
+    command: bin/rails server -b 0.0.0.0 -p 3100
+    ports:
+      - "3100:3100"
+      - "12345:12345"
+    stdin_open: true
+    tty: true
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3100/up || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  css:
+    <<: *app
+    container_name: guild_board_css
+    environment:
+      <<: *app_env
+      DOCKER_SERVICE: css
+    command: bin/rails tailwindcss:watch[always]
+    depends_on:
+      db:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+
+  jobs:
+    <<: *app
+    container_name: guild_board_jobs
+    environment:
+      <<: *app_env
+      DOCKER_SERVICE: jobs
+    command: bin/jobs --mode=async
+    depends_on:
+      db:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+
 volumes:
   postgres_data:
+  bundle_cache:

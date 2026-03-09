@@ -46,6 +46,7 @@
 .kamal/secrets-*
 
 CLAUDE.md
+AGENTS.md
 .mcp.json
 
 # Claude Code local settings
@@ -53,3 +54,6 @@ CLAUDE.md
 
 # Shrimp task manager data
 shrimp_data/
+
+# Docker Compose local overrides
+docker-compose.override.yml

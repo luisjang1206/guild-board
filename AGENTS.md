@@ -57,7 +57,16 @@ test/                 # Minitest (models, policies, components, controllers, too
 ### Development
 
 ```bash
-docker-compose up db -d          # Start PostgreSQL via Docker
+# Docker-based development (everything in Docker)
+docker compose up              # Start all services (db + web + css + jobs)
+docker compose up -d           # Start in background
+docker compose logs -f web     # Follow web server logs
+docker compose exec web bin/rails console  # Rails console
+docker compose exec web bin/rails test     # Run tests
+docker compose down            # Stop all services
+
+# Local development (DB in Docker, Rails locally)
+docker compose up db -d          # Start only PostgreSQL
 bin/setup                        # Install deps, create DBs, migrate, seed
 bin/dev                          # Start dev server (Rails + Tailwind watcher + SolidQueue worker)
 ```
