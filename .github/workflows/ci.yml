@@ -30,7 +30,7 @@ jobs:
 
     steps:
       # Step 1: Ruby setup + dependencies (bundler-cache auto-caches gems)
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: ruby/setup-ruby@v1
         with:
