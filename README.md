@@ -8,6 +8,8 @@ Agents create tasks, post comments, move cards, and update checklists
 via the MCP server. Humans see every change in real time via Action Cable.
 ```
 
+![image](./images/kanban-board.png)
+
 ---
 
 ## Table of Contents
@@ -32,35 +34,35 @@ Every architectural choice maximizes Rails 8 native capabilities. Only 5 externa
 
 ### Stack
 
-| Layer | Choice | Version |
-|---|---|---|
-| Ruby | MRI | ~> 3.4 |
-| Rails | Full-stack | ~> 8.1 |
-| Database | PostgreSQL | 17.x |
-| Frontend | Hotwire (Turbo + Stimulus) | turbo-rails ~> 2.0 |
-| CSS | Tailwind CSS v4 | tailwindcss-rails ~> 4.2 |
-| Asset Pipeline | Propshaft + Import Maps | propshaft ~> 1.1 |
-| Drag and Drop | SortableJS | via CDN (Import Maps) |
-| Real-time | Action Cable + SolidCable | built-in |
-| Background Jobs | SolidQueue | ~> 1.3 |
-| Caching | SolidCache | ~> 1.0 |
-| Auth | Rails 8 built-in | bcrypt ~> 3.1 |
-| Authorization | Pundit | ~> 2.5 |
-| Pagination | Pagy | ~> 43.0 |
-| UI Components | ViewComponent | ~> 4.4 |
-| AI Integration | fast-mcp | via MCP protocol |
-| Deployment | Kamal 2 | ~> 2.10 |
+| Layer           | Choice                     | Version                  |
+| --------------- | -------------------------- | ------------------------ |
+| Ruby            | MRI                        | ~> 3.4                   |
+| Rails           | Full-stack                 | ~> 8.1                   |
+| Database        | PostgreSQL                 | 17.x                     |
+| Frontend        | Hotwire (Turbo + Stimulus) | turbo-rails ~> 2.0       |
+| CSS             | Tailwind CSS v4            | tailwindcss-rails ~> 4.2 |
+| Asset Pipeline  | Propshaft + Import Maps    | propshaft ~> 1.1         |
+| Drag and Drop   | SortableJS                 | via CDN (Import Maps)    |
+| Real-time       | Action Cable + SolidCable  | built-in                 |
+| Background Jobs | SolidQueue                 | ~> 1.3                   |
+| Caching         | SolidCache                 | ~> 1.0                   |
+| Auth            | Rails 8 built-in           | bcrypt ~> 3.1            |
+| Authorization   | Pundit                     | ~> 2.5                   |
+| Pagination      | Pagy                       | ~> 43.0                  |
+| UI Components   | ViewComponent              | ~> 4.4                   |
+| AI Integration  | fast-mcp                   | via MCP protocol         |
+| Deployment      | Kamal 2                    | ~> 2.10                  |
 
 ### Multi-Database Setup
 
 Single PostgreSQL server with 4 logical databases:
 
-| Connection | Purpose | Migrations |
-|---|---|---|
-| `primary` | Application data | `db/migrate/` |
-| `cache` | SolidCache | `db/cache_migrate/` |
-| `queue` | SolidQueue | `db/queue_migrate/` |
-| `cable` | SolidCable | `db/cable_migrate/` |
+| Connection | Purpose          | Migrations          |
+| ---------- | ---------------- | ------------------- |
+| `primary`  | Application data | `db/migrate/`       |
+| `cache`    | SolidCache       | `db/cache_migrate/` |
+| `queue`    | SolidQueue       | `db/queue_migrate/` |
+| `cable`    | SolidCable       | `db/cable_migrate/` |
 
 No Redis required. The Solid Stack handles caching, jobs, and WebSockets entirely on PostgreSQL.
 
@@ -116,6 +118,7 @@ No Redis required. The Solid Stack handles caching, jobs, and WebSockets entirel
 Everything runs in Docker — no local Ruby installation required.
 
 **Prerequisites:**
+
 - Docker
 - Docker Compose
 
@@ -133,12 +136,12 @@ The entrypoint script automatically handles gem installation and database setup.
 
 **Services:**
 
-| Service | Description | Port |
-|---|---|---|
-| `db` | PostgreSQL 17 | 5435 |
-| `web` | Rails application server | 3100 |
-| `css` | Tailwind CSS v4 watcher | — |
-| `jobs` | SolidQueue worker | — |
+| Service | Description              | Port |
+| ------- | ------------------------ | ---- |
+| `db`    | PostgreSQL 17            | 5435 |
+| `web`   | Rails application server | 3100 |
+| `css`   | Tailwind CSS v4 watcher  | —    |
+| `jobs`  | SolidQueue worker        | —    |
 
 **Common Commands:**
 
@@ -160,6 +163,7 @@ Port 12345 is exposed for the Ruby debugger. Source code is bind-mounted (`.:/ra
 Run Rails natively on your machine with PostgreSQL in Docker.
 
 **Prerequisites:**
+
 - Ruby 3.4 or later (rbenv, asdf, or mise)
 - Docker (for PostgreSQL 17 only)
 - Bundler 2.x
@@ -179,19 +183,19 @@ bin/dev
 
 `bin/dev` uses Foreman to run three processes in parallel via `Procfile.dev`:
 
-| Process | Description |
-|---|---|
-| `web` | Rails application server (port 3100) |
-| `css` | Tailwind CSS v4 watcher |
-| `jobs` | SolidQueue worker |
+| Process | Description                          |
+| ------- | ------------------------------------ |
+| `web`   | Rails application server (port 3100) |
+| `css`   | Tailwind CSS v4 watcher              |
+| `jobs`  | SolidQueue worker                    |
 
 ### Seed Data
 
-| File | Environment | Description |
-|---|---|---|
-| `db/seeds/admin_user.rb` | All environments | Creates the initial super_admin user |
-| `db/seeds/sample_data.rb` | Development only | Creates 10 sample regular users |
-| `db/seeds/projects.rb` | Development only | Creates 2 sample projects with tasks |
+| File                      | Environment      | Description                          |
+| ------------------------- | ---------------- | ------------------------------------ |
+| `db/seeds/admin_user.rb`  | All environments | Creates the initial super_admin user |
+| `db/seeds/sample_data.rb` | Development only | Creates 10 sample regular users      |
+| `db/seeds/projects.rb`    | Development only | Creates 2 sample projects with tasks |
 
 The admin user credentials are controlled by environment variables:
 
@@ -240,10 +244,10 @@ AI Agent (Claude, Cursor, etc.)
 
 Configure your MCP client with the following settings. The MCP server supports both **SSE** and **Streamable HTTP** transports:
 
-| Transport | Endpoint | MCP Protocol Version |
-|---|---|---|
-| SSE | `/mcp/sse` | 2024-11-05 |
-| Streamable HTTP | `/mcp/messages` | 2025-03-26 |
+| Transport       | Endpoint        | MCP Protocol Version |
+| --------------- | --------------- | -------------------- |
+| SSE             | `/mcp/sse`      | 2024-11-05           |
+| Streamable HTTP | `/mcp/messages` | 2025-03-26           |
 
 **Production:**
 
@@ -283,16 +287,16 @@ Configure your MCP client with the following settings. The MCP server supports b
 
 ### Available MCP Tools
 
-| Tool | Description |
-|---|---|
-| `list_columns` | List all board columns with task counts |
-| `list_tasks` | List tasks in a column with filtering |
-| `get_task` | Get full task details including checklists and comments |
-| `create_task` | Create a new task in a specified column |
-| `update_task` | Update task title, description, or priority |
-| `move_task` | Move a task to a different column |
-| `add_comment` | Post a comment on a task |
-| `update_checklist` | Mark a checklist item complete or incomplete |
+| Tool               | Description                                             |
+| ------------------ | ------------------------------------------------------- |
+| `list_columns`     | List all board columns with task counts                 |
+| `list_tasks`       | List tasks in a column with filtering                   |
+| `get_task`         | Get full task details including checklists and comments |
+| `create_task`      | Create a new task in a specified column                 |
+| `update_task`      | Update task title, description, or priority             |
+| `move_task`        | Move a task to a different column                       |
+| `add_comment`      | Post a comment on a task                                |
+| `update_checklist` | Mark a checklist item complete or incomplete            |
 
 ### Rate Limiting
 
@@ -338,15 +342,15 @@ bin/ci
 
 ### Test Organization
 
-| Directory | Contents |
-|---|---|
-| `test/models/` | Model unit tests |
-| `test/policies/` | Pundit policy tests |
-| `test/components/` | ViewComponent tests |
-| `test/controllers/` | Controller integration tests |
-| `test/tools/` | MCP tool tests |
-| `test/jobs/` | Background job tests |
-| `test/system/` | End-to-end browser tests (Capybara) |
+| Directory           | Contents                            |
+| ------------------- | ----------------------------------- |
+| `test/models/`      | Model unit tests                    |
+| `test/policies/`    | Pundit policy tests                 |
+| `test/components/`  | ViewComponent tests                 |
+| `test/controllers/` | Controller integration tests        |
+| `test/tools/`       | MCP tool tests                      |
+| `test/jobs/`        | Background job tests                |
+| `test/system/`      | End-to-end browser tests (Capybara) |
 
 ### Test Helpers
 
@@ -368,23 +372,23 @@ bin/ci
 
 ### Configuration Files
 
-| File | Purpose |
-|---|---|
-| `config/deploy.yml` | Main Kamal deployment configuration |
-| `.kamal/secrets` | Runtime secrets (gitignored) |
-| `.kamal/hooks/pre-deploy` | Pre-deployment checks |
+| File                      | Purpose                             |
+| ------------------------- | ----------------------------------- |
+| `config/deploy.yml`       | Main Kamal deployment configuration |
+| `.kamal/secrets`          | Runtime secrets (gitignored)        |
+| `.kamal/hooks/pre-deploy` | Pre-deployment checks               |
 
 ### Required Secrets
 
 Before deploying, set all values in `.kamal/secrets`:
 
-| Secret | Description |
-|---|---|
-| `KAMAL_REGISTRY_PASSWORD` | Container registry credentials |
-| `RAILS_MASTER_KEY` | Rails credentials decryption key |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `MCP_ALLOWED_ORIGIN` | Allowed origin for MCP cross-origin requests |
-| `APP_DOMAIN` | Your application domain |
+| Secret                    | Description                                  |
+| ------------------------- | -------------------------------------------- |
+| `KAMAL_REGISTRY_PASSWORD` | Container registry credentials               |
+| `RAILS_MASTER_KEY`        | Rails credentials decryption key             |
+| `DATABASE_URL`            | PostgreSQL connection string                 |
+| `MCP_ALLOWED_ORIGIN`      | Allowed origin for MCP cross-origin requests |
+| `APP_DOMAIN`              | Your application domain                      |
 
 ### Deployment Commands
 
@@ -407,10 +411,10 @@ kamal rollback
 
 ### Health Checks
 
-| Endpoint | Type | Description |
-|---|---|---|
-| `/up` | Liveness | Rails built-in; returns 200 when the process is running |
-| `/health` | Readiness | Performs a database connectivity check |
+| Endpoint  | Type      | Description                                             |
+| --------- | --------- | ------------------------------------------------------- |
+| `/up`     | Liveness  | Rails built-in; returns 200 when the process is running |
+| `/health` | Readiness | Performs a database connectivity check                  |
 
 ### SSL (Let's Encrypt)
 
