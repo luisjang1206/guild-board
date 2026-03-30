@@ -40,7 +40,7 @@ gem "thruster", "~> 0.1", require: false
 
 # Authorization & Utilities (TSD 4.2 — external gems, max 4)
 gem "pundit", "~> 2.5"
-gem "pagy", "~> 43.0"
+gem "pagy", "~> 43.4"
 gem "lograge", "~> 0.14"
 gem "view_component", "~> 4.4"
 
