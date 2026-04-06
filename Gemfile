@@ -42,7 +42,7 @@ gem "thruster", "~> 0.1", require: false
 gem "pundit", "~> 2.5"
 gem "pagy", "~> 43.0"
 gem "lograge", "~> 0.14"
-gem "view_component", "~> 4.4"
+gem "view_component", "~> 4.6"
 
 # MCP Server
 gem "fast-mcp"
